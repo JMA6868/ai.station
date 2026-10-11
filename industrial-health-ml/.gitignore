@@ -1,0 +1,14 @@
+
+# Python generated files
+__pycache__/
+*.pyc
+
+# Local Python environments
+.venv/
+venv/
+
+# Pytest cache
+.pytest_cache/
+
+# Editor and OS files
+.DS_Store
