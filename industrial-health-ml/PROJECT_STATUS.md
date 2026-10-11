@@ -17,6 +17,11 @@ M1 — Python and Software Engineering Foundations
 - Implemented CSV-based vibration data processing
 - Successfully detected abnormal vibration from CSV
 - Debugged CSV header formatting using DictReader
+- Implemented sensor data validation
+- Handled missing, non-numeric, and out-of-range values
+- Added 5 data validation unit tests
+- All 8 automated tests passed
+
 
 ## Current Implementation
 - src/main.py: Demonstration program
@@ -30,10 +35,10 @@ M1 — Python and Software Engineering Foundations
 - Does not yet include a machine learning model
 
 ## Next Tasks
-1. Implement CSV data validation
-2. Handle missing and invalid sensor readings
-3. Add automated tests for CSV processing
-4. Identify a public industrial dataset
+1. Implement basic sensor signal statistics
+2. Calculate mean, standard deviation, and RMS
+3. Add unit tests for statistical features
+4. Identify and evaluate a real industrial dataset
 
 ## Development Environment
 - Primary IDE: GitHub Codespaces

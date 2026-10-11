@@ -4,7 +4,7 @@
 
 import csv
 from pathlib import Path
-from sensor_analysis import detect_anomaly
+from sensor_analysis import detect_anomaly, validate_sensor_value
 
 # Locate the project folder
 project_root = Path(__file__).resolve().parent.parent
@@ -20,7 +20,11 @@ with open(csv_path, "r", newline="") as file:
 
     for row in reader:
         timestamp = float(row["timestamp"])
-        vibration = float(row["vibration"])
+        vibration = validate_sensor_value(row["vibration"])
+        if vibration is None:
+            print(f"Time {timestamp}: INVALID sensor reading")
+            continue
+
 
         if detect_anomaly(vibration, threshold):
             print(f"Time {timestamp}: WARNING - {vibration}")
