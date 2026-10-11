@@ -1,17 +1,28 @@
 
-# IndustrialSense AI - Milestone 1
-# Step 7: Modular sensor analysis
+# IndustrialSense AI - M1
+# Step 10: Read vibration data from CSV
 
+import csv
+from pathlib import Path
 from sensor_analysis import detect_anomaly
 
-vibration_data = [1.2, 1.5, 1.3, 1.4, 1.6, 1.3, 4.8, 1.5, 1.4, 1.3]
+# Locate the project folder
+project_root = Path(__file__).resolve().parent.parent
+csv_path = project_root / "data" / "vibration_sample.csv"
 
 threshold = 3.0
 
-for vibration in vibration_data:
-    result = detect_anomaly(vibration, threshold)
+# Read sensor measurements
+with open(csv_path, "r", newline="") as file:
+    reader = csv.DictReader(file)
 
-    if result:
-        print("WARNING: Abnormal vibration:", vibration)
-    else:
-        print("Normal vibration:", vibration)
+    print("CSV column names:", reader.fieldnames)
+
+    for row in reader:
+        timestamp = float(row["timestamp"])
+        vibration = float(row["vibration"])
+
+        if detect_anomaly(vibration, threshold):
+            print(f"Time {timestamp}: WARNING - {vibration}")
+        else:
+            print(f"Time {timestamp}: Normal - {vibration}")
