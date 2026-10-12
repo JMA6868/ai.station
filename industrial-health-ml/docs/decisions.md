@@ -27,3 +27,37 @@ timestamps or sampling intervals.
 ### Future Work
 Implement timestamp validation and data
 quality reporting.
+
+
+## Decision 002: Timestamp Continuity
+
+Status: Accepted
+
+### Context
+Industrial sensor measurements must preserve
+their original temporal relationships.
+
+### Decision
+Validate adjacent timestamp intervals using a
+configurable expected sampling interval.
+
+Reject windows that contain invalid sensor
+measurements or discontinuous timestamps.
+
+Use a small numerical tolerance to account
+for floating-point representation errors.
+
+### Rationale
+Combining measurements across sampling gaps
+can produce misleading statistical features.
+
+### Limitations
+- Timestamp validation assumes a fixed sampling rate.
+- Sampling jitter is handled using a fixed tolerance.
+- Full timestamp quality reporting is not yet implemented.
+- Sensor measurement units are not yet standardized.
+
+### Future Work
+- Support configurable sampling tolerance.
+- Add data quality reports.
+- Evaluate timestamp integrity in real datasets.

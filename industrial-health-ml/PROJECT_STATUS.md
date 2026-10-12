@@ -35,6 +35,11 @@ M1 — Python and Software Engineering Foundations
 - Preserved original sample positions when readings are invalid
 - Added 3 pipeline integration tests
 - All 21 automated tests passed
+- Implemented timestamp validation
+- Detected missing intervals, duplicate timestamps, and backward timestamps
+- Integrated timestamp continuity checks into the sensor pipeline
+- Added 7 timestamp unit tests and 3 pipeline integration tests
+- All 31 automated tests passed
 
 ## Current Implementation
 - src/main.py: Demonstration program
@@ -48,10 +53,10 @@ M1 — Python and Software Engineering Foundations
 - Does not yet include a machine learning model
 
 ## Next Tasks
-1. Validate timestamps and sampling continuity
-2. Add tests for missing, duplicate, and irregular timestamps
-3. Improve sensor data quality reporting
-4. Select a public industrial fault-diagnosis dataset
+1. Improve edge-case handling for invalid timestamps
+2. Add data quality reporting
+3. Select a real public industrial dataset
+4. Adapt the pipeline to real sensor measurements
 
 ## Development Environment
 - Primary IDE: GitHub Codespaces

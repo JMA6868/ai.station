@@ -65,3 +65,63 @@ def test_pipeline_invalid_header(tmp_path):
         process_sensor_csv(
             csv_file, window_size=2, step=1
         )
+
+
+def test_pipeline_timestamp_gap(tmp_path):
+    csv_file = tmp_path / "timestamp_gap.csv"
+
+    csv_file.write_text(
+        "timestamp,vibration\n"
+        "0,1.0\n"
+        "1,2.0\n"
+        "2,3.0\n"
+        "8,4.0\n"
+        "9,5.0\n"
+        "10,6.0\n"
+    )
+
+    results = process_sensor_csv(
+        csv_file, window_size=3, step=1,
+        expected_interval=1.0
+    )
+
+    assert len(results) == 2
+    assert [r["start_index"] for r in results] == [0, 3]
+
+
+def test_pipeline_duplicate_timestamp(tmp_path):
+    csv_file = tmp_path / "duplicate_timestamp.csv"
+
+    csv_file.write_text(
+        "timestamp,vibration\n"
+        "0,1.0\n"
+        "1,2.0\n"
+        "1,3.0\n"
+        "2,4.0\n"
+    )
+
+    results = process_sensor_csv(
+        csv_file, window_size=3, step=1,
+        expected_interval=1.0
+    )
+
+    assert results == []
+
+
+def test_pipeline_irregular_interval(tmp_path):
+    csv_file = tmp_path / "irregular.csv"
+
+    csv_file.write_text(
+        "timestamp,vibration\n"
+        "0.0,1.0\n"
+        "0.1,2.0\n"
+        "0.2,3.0\n"
+        "0.3,4.0\n"
+    )
+
+    results = process_sensor_csv(
+        csv_file, window_size=3, step=1,
+        expected_interval=0.1
+    )
+
+    assert len(results) == 2
