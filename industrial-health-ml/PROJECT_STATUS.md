@@ -30,7 +30,11 @@ M1 — Python and Software Engineering Foundations
 - Implemented per-window Mean, Std, and RMS
 - Added 6 sliding window unit tests
 - All 18 automated tests passed
-
+- Built end-to-end CSV sensor data processing pipeline
+- Integrated data validation and sliding window feature extraction
+- Preserved original sample positions when readings are invalid
+- Added 3 pipeline integration tests
+- All 21 automated tests passed
 
 ## Current Implementation
 - src/main.py: Demonstration program
@@ -44,10 +48,10 @@ M1 — Python and Software Engineering Foundations
 - Does not yet include a machine learning model
 
 ## Next Tasks
-1. Integrate CSV reading, data validation, and feature extraction
-2. Implement an end-to-end sensor data pipeline
-3. Add pipeline integration tests
-4. Identify and evaluate a public industrial dataset
+1. Validate timestamps and sampling continuity
+2. Add tests for missing, duplicate, and irregular timestamps
+3. Improve sensor data quality reporting
+4. Select a public industrial fault-diagnosis dataset
 
 ## Development Environment
 - Primary IDE: GitHub Codespaces
