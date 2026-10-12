@@ -25,6 +25,12 @@ M1 — Python and Software Engineering Foundations
 - Calculated Mean, Population Standard Deviation, and RMS
 - Added automated tests for statistical features
 - All 12 unit tests passed
+- Implemented sliding window feature extraction
+- Added configurable window size and step
+- Implemented per-window Mean, Std, and RMS
+- Added 6 sliding window unit tests
+- All 18 automated tests passed
+
 
 ## Current Implementation
 - src/main.py: Demonstration program
@@ -38,10 +44,10 @@ M1 — Python and Software Engineering Foundations
 - Does not yet include a machine learning model
 
 ## Next Tasks
-1. Implement sliding window feature extraction
-2. Add unit tests for sliding windows
-3. Integrate feature extraction with CSV data
-4. Identify a real public industrial dataset
+1. Integrate CSV reading, data validation, and feature extraction
+2. Implement an end-to-end sensor data pipeline
+3. Add pipeline integration tests
+4. Identify and evaluate a public industrial dataset
 
 ## Development Environment
 - Primary IDE: GitHub Codespaces

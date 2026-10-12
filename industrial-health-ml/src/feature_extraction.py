@@ -26,3 +26,23 @@ def calculate_features(values):
         "std": std,
         "rms": rms
     }
+
+def extract_window_features(values, window_size, step):
+    """Extract statistical features from sliding windows."""
+
+    if window_size <= 0 or step <= 0:
+        raise ValueError("Window size and step must be positive")
+
+    results = []
+
+    for start in range(0, len(values) - window_size + 1, step):
+        window = values[start:start + window_size]
+
+        features = calculate_features(window)
+
+        features["start_index"] = start
+        features["end_index"] = start + window_size - 1
+
+        results.append(features)
+
+    return results
