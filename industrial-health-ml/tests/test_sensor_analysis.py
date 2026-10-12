@@ -1,4 +1,3 @@
-
 from src.sensor_analysis import detect_anomaly, validate_sensor_value
 
 
@@ -12,6 +11,7 @@ def test_normal_value():
 
 def test_equal_threshold():
     assert detect_anomaly(3.0, 3.0) is False
+
 
 def test_valid_sensor_value():
     assert validate_sensor_value("4.8") == 4.8
