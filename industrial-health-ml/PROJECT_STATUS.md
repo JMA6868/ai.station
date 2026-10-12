@@ -21,7 +21,10 @@ M1 — Python and Software Engineering Foundations
 - Handled missing, non-numeric, and out-of-range values
 - Added 5 data validation unit tests
 - All 8 automated tests passed
-
+- Implemented statistical feature extraction
+- Calculated Mean, Population Standard Deviation, and RMS
+- Added automated tests for statistical features
+- All 12 unit tests passed
 
 ## Current Implementation
 - src/main.py: Demonstration program
@@ -35,10 +38,10 @@ M1 — Python and Software Engineering Foundations
 - Does not yet include a machine learning model
 
 ## Next Tasks
-1. Implement basic sensor signal statistics
-2. Calculate mean, standard deviation, and RMS
-3. Add unit tests for statistical features
-4. Identify and evaluate a real industrial dataset
+1. Implement sliding window feature extraction
+2. Add unit tests for sliding windows
+3. Integrate feature extraction with CSV data
+4. Identify a real public industrial dataset
 
 ## Development Environment
 - Primary IDE: GitHub Codespaces
