@@ -61,3 +61,36 @@ can produce misleading statistical features.
 - Support configurable sampling tolerance.
 - Add data quality reports.
 - Evaluate timestamp integrity in real datasets.
+
+## Decision 003: Data Quality Reporting
+
+Status: Accepted
+
+### Context
+Invalid sensor readings and timestamp discontinuities
+can reduce the number of usable analysis windows.
+
+### Decision
+Generate a quality report alongside extracted features.
+
+Track:
+- Total samples
+- Invalid measurements
+- Timestamp issues
+- Total candidate windows
+- Valid and skipped windows
+- Invalid sample rate
+- Valid window rate
+
+### Rationale
+Data quality must be measurable and traceable before
+features are used in machine learning models.
+
+### Current Limitations
+- CSV data is read twice for feature extraction and reporting.
+- Timestamp issue counts do not equal missing sample counts.
+- Sensor value range is a temporary demonstration rule.
+- No automated quality acceptance threshold is implemented.
+
+### Future Work
+Refactor into a single-pass data-processing pipeline.

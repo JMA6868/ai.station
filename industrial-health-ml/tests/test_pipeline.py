@@ -1,7 +1,7 @@
 
 import pytest
 
-from src.pipeline import process_sensor_csv
+from src.pipeline import process_sensor_csv, process_sensor_csv_with_report
 
 
 def test_pipeline_with_invalid_values(tmp_path):
@@ -125,3 +125,65 @@ def test_pipeline_irregular_interval(tmp_path):
     )
 
     assert len(results) == 2
+
+def test_pipeline_quality_report(tmp_path):
+    csv_file = tmp_path / "quality.csv"
+    csv_file.write_text(
+        "timestamp,vibration\n"
+        "0,1.0\n"
+        "1,2.0\n"
+        "2,\n"
+        "3,4.0\n"
+        "4,5.0\n"
+        "5,6.0\n"
+    )
+
+    features, report = process_sensor_csv_with_report(
+        csv_file, window_size=3, step=1
+    )
+
+    assert len(features) == 1
+    assert report["total_samples"] == 6
+    assert report["invalid_measurements"] == 1
+    assert report["total_windows"] == 4
+    assert report["valid_windows"] == 1
+    assert report["skipped_windows"] == 3
+
+
+def test_pipeline_report_timestamp_gap(tmp_path):
+    csv_file = tmp_path / "gap.csv"
+    csv_file.write_text(
+        "timestamp,vibration\n"
+        "0,1.0\n"
+        "1,2.0\n"
+        "5,3.0\n"
+        "6,4.0\n"
+    )
+
+    features, report = process_sensor_csv_with_report(
+        csv_file, window_size=2, step=1
+    )
+
+    assert len(features) == 2
+    assert report["timestamp_issues"] == 1
+    assert report["skipped_windows"] == 1
+
+
+def test_pipeline_report_perfect_data(tmp_path):
+    csv_file = tmp_path / "perfect.csv"
+    csv_file.write_text(
+        "timestamp,vibration\n"
+        "0,1.0\n"
+        "1,2.0\n"
+        "2,3.0\n"
+        "3,4.0\n"
+    )
+
+    features, report = process_sensor_csv_with_report(
+        csv_file, window_size=2, step=1
+    )
+
+    assert len(features) == 3
+    assert report["invalid_measurements"] == 0
+    assert report["timestamp_issues"] == 0
+    assert report["window_valid_rate"] == pytest.approx(1.0)

@@ -40,6 +40,12 @@ M1 — Python and Software Engineering Foundations
 - Integrated timestamp continuity checks into the sensor pipeline
 - Added 7 timestamp unit tests and 3 pipeline integration tests
 - All 31 automated tests passed
+- Implemented Data Quality Reporting
+- Calculated invalid sample rate and valid window rate
+- Integrated quality reporting with the CSV pipeline
+- Added 4 data quality unit tests
+- Added 3 pipeline integration tests
+- All 38 automated tests passed
 
 ## Current Implementation
 - src/main.py: Demonstration program
@@ -53,10 +59,10 @@ M1 — Python and Software Engineering Foundations
 - Does not yet include a machine learning model
 
 ## Next Tasks
-1. Improve edge-case handling for invalid timestamps
-2. Add data quality reporting
-3. Select a real public industrial dataset
-4. Adapt the pipeline to real sensor measurements
+1. Refactor the pipeline to avoid reading CSV twice
+2. Improve timestamp and sensor value edge-case handling
+3. Add tests for pipeline reliability
+4. Identify and evaluate a public industrial dataset
 
 ## Development Environment
 - Primary IDE: GitHub Codespaces
