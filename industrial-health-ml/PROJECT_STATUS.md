@@ -2,7 +2,21 @@
 # IndustrialSense AI — Project Status
 
 ## Current Milestone
-M1 — Python and Software Engineering Foundations
+M1 — IndustrialSense AI Foundations and Real Data Integration
+
+Current Step: 22 — Fault Classification Baseline
+
+Status:
+- Python Development Environment: Completed
+- Git and GitHub Workflow: Completed
+- Data Validation Pipeline: Completed
+- Automated Testing: 39 tests passed at last verification
+- Real CWRU Dataset Loading: Completed
+- Real Vibration Visualization: Completed
+- Real Signal Feature Extraction: Completed
+- Exploratory RMS Analysis: Completed
+- Fault Classification Baseline: Not Started
+
 
 ## Completed
 - Created GitHub repository: JMA6868/ai.station
@@ -52,12 +66,77 @@ M1 — Python and Software Engineering Foundations
 - Preserved backward-compatible public interfaces
 - Added interface consistency integration test
 - All 39 automated tests passed
+## Recent Progress — Real Industrial Data (Steps 18–21)
 
+- Selected the CWRU Bearing Dataset for real industrial data analysis
+- Downloaded and inspected two MATLAB data files:
+  - 97.mat: Normal bearing
+  - 105.mat: Inner race fault
+- Loaded real vibration signals using SciPy and NumPy
+- Confirmed drive-end vibration signals at 12,000 Hz
+- Visualized normal and faulty bearing vibration waveforms
+- Applied the existing sliding window feature extraction module
+- Calculated window-level Mean, Standard Deviation, and RMS
+- Generated window-level RMS trend plots
+- Observed clear RMS separation between the two recordings
+- Completed initial exploratory analysis of real bearing data
 
 ## Current Implementation
 - src/main.py: Demonstration program
 - src/sensor_analysis.py: Threshold anomaly detection
 - tests/test_sensor_analysis.py: Automated unit tests
+
+
+## Current Limitations — Real Data Analysis
+
+- Only two CWRU recordings have been analyzed.
+- CWRU fault conditions involve artificially introduced defects.
+- No independently evaluated fault classification model exists yet.
+- Current RMS separation does not establish generalizable classification performance.
+- Overlapping windows from the same recording are highly correlated.
+- Random window-level train/test splitting could cause data leakage.
+- Additional operating conditions and fault severities are needed.
+- Real-data feature extraction has not yet been integrated into the existing CSV quality-reporting pipeline.
+- Large dataset handling and performance optimization remain future tasks.
+
+
+## Current Implementation — Real Data Analysis
+
+### Dataset
+- Source: CWRU Bearing Data Center
+- Normal recording: 97.mat
+- Fault recording: 105.mat
+- Signal: Drive-end vibration
+- Sampling frequency: 12,000 Hz
+
+### Feature Extraction
+- Window size: 1,200 samples (0.1 second)
+- Step size: 600 samples (0.05 second)
+- Overlap: 50%
+- Features: Mean, Population Standard Deviation, RMS
+
+### Experimental Results
+
+| Metric | Normal | Inner Race Fault |
+|---|---:|---:|
+| Total samples | 243,938 | 121,265 |
+| Total windows | 405 | 201 |
+| Average RMS | 0.073719 | 0.291421 |
+| Average Std | 0.072625 | 0.291109 |
+| Maximum RMS | 0.082824 | 0.304349 |
+
+### Findings
+- Fault average window RMS is approximately 3.95 times normal RMS.
+- RMS remains relatively stable within each recording.
+- RMS values show clear separation between the two recordings.
+- RMS is a promising candidate feature for further fault classification experiments.
+
+### Python Scripts
+- inspect_cwru.py: Inspect MATLAB data structures
+- visualize_cwru.py: Plot vibration waveforms
+- analyze_cwru.py: Extract statistical window features
+- plot_cwru_features.py: Visualize window-level RMS trends
+
 
 ## Current Limitations
 - Uses simulated vibration measurements
@@ -66,10 +145,31 @@ M1 — Python and Software Engineering Foundations
 - Does not yet include a machine learning model
 
 ## Next Tasks
-1. Add tests for CSV reading efficiency and robustness
-2. Improve validation of non-finite sensor values
-3. Evaluate publicly available industrial fault datasets
-4. Adapt the pipeline to real sensor measurements
+### Step 22 — Fault Classification Baseline
+1. Implement a simple RMS threshold-based classifier.
+2. Understand threshold selection and classification decisions.
+3. Calculate confusion matrix, accuracy, precision, recall, and F1 score.
+4. Clearly distinguish exploratory results from independent model evaluation.
+
+### Step 23 — Dataset Expansion
+1. Download additional CWRU bearing recordings.
+2. Include different operating loads and fault conditions.
+3. Design a leakage-resistant train/test split by recording or experimental group.
+4. Evaluate whether RMS generalizes across different conditions.
+
+### Step 24 — ML-ready Dataset
+1. Build a structured window-level feature table.
+2. Assign fault labels and source recording identifiers.
+3. Include Mean, Std, RMS, and additional vibration features.
+4. Prepare the dataset for baseline machine learning models.
+
+### Engineering Improvements
+1. Update requirements.txt with NumPy, SciPy, and Matplotlib versions.
+2. Maintain docs/experiment_log.md.
+3. Keep downloaded raw datasets excluded from Git.
+4. Add automated tests for CWRU data loading and feature generation.
+5. Benchmark NumPy-based feature extraction performance.
+
 
 ## Development Environment
 - Primary IDE: GitHub Codespaces

@@ -12,3 +12,6 @@ venv/
 
 # Editor and OS files
 .DS_Store
+
+# Downloaded original industrial datasets
+/data/raw/
