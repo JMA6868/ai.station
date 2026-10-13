@@ -187,3 +187,25 @@ def test_pipeline_report_perfect_data(tmp_path):
     assert report["invalid_measurements"] == 0
     assert report["timestamp_issues"] == 0
     assert report["window_valid_rate"] == pytest.approx(1.0)
+
+def test_pipeline_interfaces_consistent(tmp_path):
+    csv_file = tmp_path / "consistent.csv"
+    csv_file.write_text(
+        "timestamp,vibration\n"
+        "0,1.0\n"
+        "1,2.0\n"
+        "2,3.0\n"
+        "3,4.0\n"
+    )
+
+    features_only = process_sensor_csv(
+        csv_file, window_size=2, step=1
+    )
+
+    features, report = process_sensor_csv_with_report(
+        csv_file, window_size=2, step=1
+    )
+
+    assert features_only == features
+    assert len(features) == 3
+    assert report["valid_windows"] == 3

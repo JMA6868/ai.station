@@ -47,6 +47,13 @@ M1 — Python and Software Engineering Foundations
 - Added 3 pipeline integration tests
 - All 38 automated tests passed
 
+- Refactored sensor data pipeline into shared processing logic
+- Eliminated duplicate CSV reads in the reporting workflow
+- Preserved backward-compatible public interfaces
+- Added interface consistency integration test
+- All 39 automated tests passed
+
+
 ## Current Implementation
 - src/main.py: Demonstration program
 - src/sensor_analysis.py: Threshold anomaly detection
@@ -59,10 +66,10 @@ M1 — Python and Software Engineering Foundations
 - Does not yet include a machine learning model
 
 ## Next Tasks
-1. Refactor the pipeline to avoid reading CSV twice
-2. Improve timestamp and sensor value edge-case handling
-3. Add tests for pipeline reliability
-4. Identify and evaluate a public industrial dataset
+1. Add tests for CSV reading efficiency and robustness
+2. Improve validation of non-finite sensor values
+3. Evaluate publicly available industrial fault datasets
+4. Adapt the pipeline to real sensor measurements
 
 ## Development Environment
 - Primary IDE: GitHub Codespaces

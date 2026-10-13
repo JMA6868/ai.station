@@ -94,3 +94,32 @@ features are used in machine learning models.
 
 ### Future Work
 Refactor into a single-pass data-processing pipeline.
+
+## Decision 004: Shared Pipeline Processing
+
+Status: Accepted
+
+### Context
+The original reporting pipeline read the same CSV file
+twice, duplicating data ingestion and validation.
+
+### Decision
+Introduce a shared internal processing function
+called _process_csv().
+
+Keep two public interfaces:
+- process_sensor_csv(): returns features only
+- process_sensor_csv_with_report(): returns features and report
+
+### Rationale
+Reduce duplicate logic, improve maintainability,
+and preserve backward compatibility.
+
+### Limitations
+- All CSV rows are still held in memory.
+- Sensor ranges are demonstration assumptions.
+- Real industrial dataset support is not yet implemented.
+
+### Future Work
+Evaluate streaming and chunk-based processing for
+large high-frequency sensor datasets.
