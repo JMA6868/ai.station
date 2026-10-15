@@ -6,11 +6,10 @@
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
-**Last Completed Step:** Step 23 — RMS Classifier Unit Testing  
-**Next Step:** Step 24 — Independent Model Evaluation  
-**Automated Tests:** 47 passed (last verified)  
-**Last Confirmed GitHub Commit:** `b102bf4` (Steps 18–21)  
-**Steps 22–23 GitHub Commit:** Pending confirmation
+**Last Completed Step:** Step 24 — Independent Model Evaluation  
+**Next Step:** Step 25 — ML-ready Feature Dataset  
+**Automated Tests:** 57 passed (last verified)  
+**Last Confirmed GitHub Commit:** `30870b2` (Step 24 evaluation infrastructure)  
 
 ---
 
@@ -77,13 +76,13 @@ Other future AI or Raspberry Pi projects should have their own directories.
 | RMS trend visualization | Completed |
 | Exploratory threshold classification | Completed |
 | Classification unit tests | Completed |
-| Independent model evaluation | Not started |
+| Independent model evaluation | Completed — 3 HP holdout evaluation |
 | ML-ready feature dataset | Not started |
 | Trained ML classification model | Not started |
 | Multimodal sensor fusion | Not started |
 | Interactive ML demonstration | Not started |
 
-**Current focus:** Transition from exploratory fault classification to scientifically valid, leakage-resistant evaluation.
+**Current focus:** Step 25 — Build a reproducible ML-ready feature dataset using the validated CWRU data pipeline and recording-level dataset split.
 
 ---
 
@@ -619,7 +618,60 @@ Other future AI or Raspberry Pi projects should have their own directories.
 - **Status: Completed**
 
 **Version Control**
-- Steps 22–23 require GitHub commit confirmation.
+- Step 23 classification tests and project status reorganization were committed in `5cd01f5`.
+- Step 22 RMS threshold classification is documented in the project history; its exact implementation commit has not been separately verified.
+
+---
+
+## Phase F — Independent Model Evaluation
+
+### Step 24 — Independent Model Evaluation
+
+**Completed**
+- Expanded the CWRU dataset to eight recordings covering 0–3 HP motor loads.
+- Implemented a strict CWRU Drive End signal loader with input validation.
+- Resolved incorrect variable selection in `99.mat`, which contains both X098 and X099 signals.
+- Established recording-level train/validation/test splits before window generation.
+- Reused Mean, Std, and RMS feature extraction with 1200-sample windows and 600-sample steps.
+- Added 10 automated tests covering data loading, invalid signals, dataset separation, labels, and window counts.
+- Froze the RMS threshold at 0.18 before the final holdout evaluation.
+- Committed and pushed evaluation infrastructure in Git commit `30870b2`.
+
+**Results**
+- Training: 4 recordings, 1,613 windows (0–1 HP).
+- Validation: 2 recordings, 1,009 windows (2 HP).
+- Holdout Test: 2 recordings, 1,011 windows (3 HP).
+- Validation window-level Accuracy, Precision, Recall, F1, and Balanced Accuracy: 1.0000.
+- Validation maximum Normal RMS: 0.072400.
+- Validation minimum Fault RMS: 0.285734.
+- Validation RMS separation gap: approximately 0.213333.
+- Holdout Test confusion matrix: TN=808, FP=0, FN=0, TP=203.
+- Holdout Test window-level Accuracy, Precision, Recall, F1, Specificity, and Balanced Accuracy: 1.0000.
+- Test recording 100: 808/808 windows classified correctly.
+- Test recording 108: 203/203 windows classified correctly.
+- Full automated test suite: 57 passed.
+- Results provide preliminary evidence of cross-load generalization under the selected CWRU experimental conditions.
+
+**Limitations / Resolved**
+- Resolved: Incorrect selection of X098 instead of X099 in `99.mat`.
+- Resolved: Recording IDs are separated across training, validation, and test configurations.
+- Resolved: Loader rejects missing, empty, NaN, and infinite signals.
+- Limitation: Different load recordings may originate from the same physical bearing or manufactured defect.
+- Limitation: Overlapping windows are correlated and must not be treated as independent experiments.
+- Limitation: Holdout evaluation contains only two original recordings.
+- Limitation: Classification covers Normal versus 0.007-inch Inner Race Fault only.
+- Limitation: Full metadata for every recording has not yet been standardized.
+- Limitation: The RMS threshold originated from earlier exploratory development; no new trained ML classifier was developed in this step.
+- Limitation: Performance on independent bearings, unseen fault severities, other machines, and real industrial environments remains unverified.
+
+**Success Criteria**
+- [x] Document a recording-level, leakage-resistant evaluation protocol.
+- [x] Perform holdout evaluation without tuning the frozen threshold on test results.
+- [x] Report confusion matrix and classification metrics.
+- [x] Clearly distinguish window-level results from independent experiments.
+- [x] Record remaining generalization and experimental limitations.
+
+**Status: Completed**
 
 ---
 
@@ -698,54 +750,7 @@ These are ongoing issues, not necessarily blockers.
 
 ---
 
-# 6. Next Steps
-
-## Step 24 — Independent Model Evaluation
-
-**Planned**
-- Expand the CWRU dataset with additional recordings.
-- Record source file, fault type, fault size, load, speed, and channel metadata.
-- Design train/validation/test grouping without mixing overlapping windows from the same source recording across splits.
-- Select classification thresholds using development data only.
-- Evaluate on held-out recordings.
-- Compare independent performance with the exploratory 100% result.
-
-**Success Criteria**
-- A documented, leakage-resistant evaluation protocol.
-- At least one held-out evaluation using an appropriately independent recording.
-- Classification metrics reported with relevant limitations.
-
-**Status: Not Started**
-
-## Step 25 — ML-ready Feature Dataset
-
-**Planned**
-- Generate one feature record per analysis window.
-- Include Mean, Std, RMS, label, source recording, and window indices.
-- Save structured feature data.
-- Validate consistency between features and labels.
-
-**Success Criteria**
-- Reproducible feature table suitable for machine learning experiments.
-
-**Status: Not Started**
-
-## Step 26 — Machine Learning Classification Baseline
-
-**Planned**
-- Train an initial machine learning classifier.
-- Compare ML classification with the RMS threshold baseline.
-- Report appropriate validation and test metrics.
-- Document model assumptions and generalization limits.
-
-**Success Criteria**
-- First trained ML fault classifier with a reproducible evaluation protocol.
-
-**Status: Not Started**
-
----
-
-# 7. Milestone Summary
+# 6. Milestone Summary
 
 | Milestone | Scope | Status |
 |---|---|---|
@@ -754,14 +759,14 @@ These are ongoing issues, not necessarily blockers.
 | M1-C | Data Quality and Feature Pipeline | Completed |
 | M1-D | CWRU Real Vibration Analysis | Completed |
 | M1-E | Exploratory Fault Classification | Completed |
-| M1-F | Independent Model Evaluation | Next |
+| M1-F | Independent Model Evaluation | Completed |
 | M2 | ML Models and Dataset Expansion | Planned |
 | M3 | Advanced Signal Features and Sensor Fusion | Planned |
 | M4 | Interactive Demonstration and Portfolio Product | Planned |
 
 ---
 
-# 8. Important Project Notes
+# 7. Important Project Notes
 
 1. Raw CWRU `.mat` files are stored under `data/raw/cwru/` and should not be committed to GitHub.
 2. Project documentation, code, tests, and selected experiment figures should be version controlled.
@@ -773,7 +778,7 @@ These are ongoing issues, not necessarily blockers.
 
 ---
 
-# 9. Project Continuation Instructions
+# 8. Project Continuation Instructions
 
 When resuming this project in a future session:
 
@@ -784,5 +789,4 @@ When resuming this project in a future session:
 5. Continue using the established Python modules rather than rewriting completed functionality.
 6. Record new results, unresolved limitations, tests, and commits.
 7. Preserve experimental integrity and avoid data leakage.
-
-**Current continuation point: Step 24 — Independent Model Evaluation.**
+8. When resuming the project, use the Next Step field at the top of PROJECT_STATUS.md as the single source of truth for determining where development should continue.
