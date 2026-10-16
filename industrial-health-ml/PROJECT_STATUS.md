@@ -6,10 +6,10 @@
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
-**Last Completed Step:** Step 24 — Independent Model Evaluation  
-**Next Step:** Step 25 — ML-ready Feature Dataset  
-**Automated Tests:** 57 passed (last verified)  
-**Last Confirmed GitHub Commit:** `30870b2` (Step 24 evaluation infrastructure)  
+**Last Completed Step:** Step 25 — ML-ready Feature Dataset  
+**Next Step:** Step 26 — Machine Learning Baseline  
+**Automated Tests:** 81 passed (last verified)  
+**Last Confirmed GitHub Commit:** `dfc6313` (Step 24 documentation)  
 
 ---
 
@@ -77,12 +77,12 @@ Other future AI or Raspberry Pi projects should have their own directories.
 | Exploratory threshold classification | Completed |
 | Classification unit tests | Completed |
 | Independent model evaluation | Completed — 3 HP holdout evaluation |
-| ML-ready feature dataset | Not started |
+| ML-ready feature dataset | Completed — 3,633 validated windows across three recording-isolated CSV datasets |
 | Trained ML classification model | Not started |
 | Multimodal sensor fusion | Not started |
 | Interactive ML demonstration | Not started |
 
-**Current focus:** Step 25 — Build a reproducible ML-ready feature dataset using the validated CWRU data pipeline and recording-level dataset split.
+**Current focus:** Step 26 — Train and evaluate a reproducible machine learning baseline using the existing Train, Validation, and Holdout Test feature datasets, with strict prevention of data leakage.
 
 ---
 
@@ -673,6 +673,53 @@ Other future AI or Raspberry Pi projects should have their own directories.
 
 **Status: Completed**
 
+## Phase G — ML-ready Feature Dataset
+
+### Step 25 — ML-ready Feature Dataset
+
+**Completed**
+- Defined a consistent eight-column CSV schema containing recording ID, dataset split, label, window boundaries, Mean, Std, and RMS.
+- Implemented reusable feature CSV export and import modules.
+- Added a shared feature record validator for schema, data types, valid splits, binary labels, window metadata, and finite numerical features.
+- Refactored Exporter and Importer to share validation logic and avoid duplicated data rules.
+- Implemented pre-write validation to prevent invalid records from leaving partially exported CSV files.
+- Added automated tests for CSV round trips, schema errors, invalid metadata, NaN/Infinity, and partial export prevention.
+- Updated `.gitignore` to exclude generated files under `data/processed/`.
+- Generated separate Train, Validation, and Holdout Test feature CSV files using the existing recording-level dataset split.
+
+**Results**
+- Training dataset: 1,613 windows; 1,210 Normal and 403 Fault.
+- Validation dataset: 1,009 windows; 807 Normal and 202 Fault.
+- Holdout Test dataset: 1,011 windows; 808 Normal and 203 Fault.
+- Total: 3,633 feature windows from eight original CWRU recordings.
+- Verified exact recording-level separation across all three datasets.
+- Verified CSV schema, feature values, labels, and metadata.
+- Confirmed successful CSV export/import with restored Python data types.
+- Regenerated all three datasets and confirmed byte-for-byte reproducibility in the current environment.
+- Full automated regression suite: 81 tests passed.
+
+**Limitations / Resolved**
+- Resolved: Exporter and Importer now use a shared validation implementation.
+- Resolved: Invalid feature records are rejected before CSV writing begins.
+- Resolved: Generated feature datasets are excluded from Git version control.
+- Limitation: Pre-write validation does not protect against partial files caused by I/O failures or interrupted writes.
+- Limitation: Byte-for-byte reproducibility has been verified only in the current development environment.
+- Limitation: The feature dataset currently contains only Mean, Std, and RMS.
+- Limitation: The 3,633 overlapping windows are not statistically independent observations.
+- Limitation: Recording-level isolation does not establish generalization to entirely independent bearings or industrial machines.
+- Limitation: No trained machine learning classifier has been developed yet.
+
+**Success Criteria**
+- [x] Define a reusable ML feature schema.
+- [x] Implement CSV export and import with validation.
+- [x] Generate separate Train, Validation, and Test feature datasets.
+- [x] Verify recording-level dataset isolation.
+- [x] Validate labels, metadata, and numerical features.
+- [x] Confirm dataset reproducibility.
+- [x] Pass the full automated regression test suite.
+
+**Status: Completed**
+
 ---
 
 # 4. Current Technical Architecture
@@ -687,6 +734,14 @@ Other future AI or Raspberry Pi projects should have their own directories.
 | `src/timestamp_validation.py` | Timestamp continuity checks |
 | `src/pipeline.py` | CSV processing and feature pipeline |
 | `src/classification.py` | RMS-based fault prediction |
+| `src/cwru_loader.py` | Load and validate CWRU Drive End vibration signals |
+| `src/dataset_split.py` | Define recording-level Train, Validation, and Test splits |
+| `src/evaluation_dataset.py` | Generate window-level feature datasets from recording splits |
+| `src/evaluation_config.py` | Store evaluation and window configuration |
+| `src/feature_schema.py` | Define feature, target, metadata, and CSV columns |
+| `src/feature_export.py` | Validate and export feature datasets to CSV |
+| `src/feature_import.py` | Import CSV datasets and restore Python data types |
+| `src/feature_validation.py` | Shared feature record and metadata validation |
 
 ## Real Data Analysis Scripts
 
@@ -700,15 +755,19 @@ Other future AI or Raspberry Pi projects should have their own directories.
 
 ## Test Coverage
 
-- Sensor analysis
-- Feature extraction
-- Sliding windows
-- Timestamp validation
-- Data quality
+- Sensor analysis and threshold classification
+- Feature extraction and sliding windows
+- Timestamp validation and data quality
 - Pipeline integration
-- Threshold classification
+- CWRU Drive End signal loading
+- Recording-level dataset splitting
+- Evaluation dataset construction
+- Feature CSV export and round-trip verification
+- Feature CSV import and data type restoration
+- Shared feature validation and invalid-data rejection
+- Prevention of partial exports caused by validation failures
 
-Last verified result: **47 passed**.
+Last verified result: **81 passed**.
 
 ## Current Dependencies
 
@@ -760,6 +819,7 @@ These are ongoing issues, not necessarily blockers.
 | M1-D | CWRU Real Vibration Analysis | Completed |
 | M1-E | Exploratory Fault Classification | Completed |
 | M1-F | Independent Model Evaluation | Completed |
+| M1-G | ML-ready Feature Dataset | Completed |
 | M2 | ML Models and Dataset Expansion | Planned |
 | M3 | Advanced Signal Features and Sensor Fusion | Planned |
 | M4 | Interactive Demonstration and Portfolio Product | Planned |

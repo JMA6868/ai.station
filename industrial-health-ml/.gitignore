@@ -15,3 +15,6 @@ venv/
 
 # Downloaded original industrial datasets
 /data/raw/
+
+# Generated and processed feature datasets
+/data/processed/
