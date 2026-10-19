@@ -6,9 +6,9 @@
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
-**Last Completed Step:** Step 25 — ML-ready Feature Dataset  
-**Next Step:** Step 26 — Machine Learning Baseline  
-**Automated Tests:** 81 passed (last verified)  
+**Last Completed Step:** Step 26 — Reproducible ML Baseline and Holdout Evaluation  
+**Next Step:** Step 27 — Dataset Expansion and Independent-Bearing Evaluation Planning  
+**Automated Tests:** 93 passed (last verified)  
 **Last Confirmed GitHub Commit:** `dfc6313` (Step 24 documentation)  
 
 ---
@@ -78,11 +78,13 @@ Other future AI or Raspberry Pi projects should have their own directories.
 | Classification unit tests | Completed |
 | Independent model evaluation | Completed — 3 HP holdout evaluation |
 | ML-ready feature dataset | Completed — 3,633 validated windows across three recording-isolated CSV datasets |
-| Trained ML classification model | Not started |
+| Trained ML classification model | Completed — Logistic Regression with StandardScaler |
+| Reproducible ML evaluation | Completed — Training, Validation, and Final Holdout |
+| ML model robustness investigation | Completed — exploratory feature and signal noise experiments |
 | Multimodal sensor fusion | Not started |
 | Interactive ML demonstration | Not started |
 
-**Current focus:** Step 26 — Train and evaluate a reproducible machine learning baseline using the existing Train, Validation, and Holdout Test feature datasets, with strict prevention of data leakage.
+**Current focus:** Step 27 — Plan dataset expansion and stronger generalization evaluation, emphasizing independent physical bearings, additional operating conditions, and leakage-resistant experimental design. The Step 26 Holdout Test has already been evaluated and must not be treated as an untouched test set for future model selection.
 
 ---
 
@@ -720,6 +722,66 @@ Other future AI or Raspberry Pi projects should have their own directories.
 
 **Status: Completed**
 
+## Phase H — Machine Learning Baseline
+
+### Step 26 — Reproducible ML Baseline and Holdout Evaluation
+
+**Completed**
+- Added scikit-learn as a pinned project dependency.
+- Implemented a reusable StandardScaler and LogisticRegression pipeline in `src/ml_baseline.py`.
+- Established a frozen baseline using Mean, Std, and RMS features, with `max_iter=1000`, `random_state=42`, and the default 0.5 classification threshold.
+- Implemented `src/ml_evaluation.py` for binary classification metrics and confusion matrix counts.
+- Implemented `run_ml_baseline.py` for reproducible training and validation evaluation.
+- Added explicit dataset split and recording isolation checks.
+- Added automated tests for pipeline construction, classification metrics, invalid labels, dataset splits, and recording overlap.
+- Compared the ML baseline with the existing RMS threshold classifier on validation data.
+- Investigated feature correlations and conducted feature ablation experiments.
+- Conducted exploratory feature-level and signal-level Gaussian noise experiments using validation data.
+- Froze the ML configuration before the first final Holdout Test evaluation.
+
+**Results**
+- Training: 1,613 windows from recordings 97, 98, 105, and 106.
+- Training metrics: TN=1210, FP=0, FN=0, TP=403; Accuracy=1.000 and F1=1.000.
+- Validation: 1,009 windows from recordings 99 and 107.
+- Validation metrics: TN=807, FP=0, FN=0, TP=202; Accuracy=1.000 and F1=1.000.
+- Final Holdout Test: 1,011 windows from recordings 100 and 108.
+- Final Holdout metrics: TN=808, FP=0, FN=0, TP=203; Accuracy=1.000, Precision=1.000, Recall=1.000, and F1=1.000.
+- The ML baseline and previously frozen RMS threshold classifier both achieved perfect classification on the validation dataset.
+- RMS-only, Mean+RMS, Std+RMS, and Mean+Std+RMS Logistic Regression variants all achieved perfect validation classification.
+- Training feature correlation between Std and RMS was approximately 0.999992.
+- The three-feature baseline maintained perfect validation classification under the tested feature-level perturbations and signal-level Gaussian noise conditions up to a noise standard deviation equal to 20% of the source signal standard deviation.
+- Final Holdout evaluation was performed after the model configuration had been frozen.
+- Full regression suite: 93 tests passed before the final documentation update.
+
+**Limitations / Resolved**
+- Resolved: Machine learning preprocessing is fitted using Training data only through the scikit-learn Pipeline.
+- Resolved: Training and Validation use disjoint recording IDs, with automated checks.
+- Resolved: Final Holdout recording IDs were verified to be disjoint from Training and Validation.
+- Resolved: Classification metrics and basic dataset integrity checks have automated tests.
+- Limitation: Perfect performance on this CWRU subset does not establish performance on independent industrial equipment.
+- Limitation: Different recordings may share physical bearings, defect instances, or related acquisition conditions.
+- Limitation: Overlapping signal windows are correlated and are not statistically independent samples.
+- Limitation: The current task is relatively easy; RMS-only classification also achieved perfect validation performance.
+- Limitation: Std and RMS are highly correlated, and additional features have not demonstrated a validation accuracy improvement.
+- Limitation: Gaussian noise robustness experiments used simulated perturbations and limited random realizations, not real-world sensor disturbances.
+- Limitation: The model has not been validated across independent bearing units, industrial sites, or substantially different operating conditions.
+- Limitation: The final Holdout Test has now been evaluated and must not be reused for iterative model selection.
+
+**Success Criteria**
+- [x] Add and verify the scikit-learn dependency.
+- [x] Implement a reproducible Logistic Regression pipeline.
+- [x] Fit preprocessing and model parameters using Training data only.
+- [x] Evaluate Training and Validation independently.
+- [x] Compare the ML baseline against the existing RMS threshold method.
+- [x] Investigate feature redundancy and selected robustness scenarios.
+- [x] Implement reusable classification evaluation functions.
+- [x] Add automated tests for ML evaluation and dataset integrity.
+- [x] Freeze the model configuration before final Holdout evaluation.
+- [x] Complete the first designated Holdout Test evaluation.
+- [x] Pass the automated regression test suite.
+
+**Status: Completed**
+
 ---
 
 # 4. Current Technical Architecture
@@ -742,6 +804,8 @@ Other future AI or Raspberry Pi projects should have their own directories.
 | `src/feature_export.py` | Validate and export feature datasets to CSV |
 | `src/feature_import.py` | Import CSV datasets and restore Python data types |
 | `src/feature_validation.py` | Shared feature record and metadata validation |
+| `src/ml_baseline.py` | Build the StandardScaler and LogisticRegression baseline pipeline |
+| `src/ml_evaluation.py` | Calculate binary classification metrics and confusion matrix counts |
 
 ## Real Data Analysis Scripts
 
@@ -752,6 +816,7 @@ Other future AI or Raspberry Pi projects should have their own directories.
 | `analyze_cwru.py` | Extract real vibration window features |
 | `plot_cwru_features.py` | Plot RMS feature trends |
 | `demo_cwru_classifier.py` | Run exploratory threshold classification |
+| `run_ml_baseline.py` | Reproducibly train the ML baseline and evaluate Training and Validation datasets |
 
 ## Test Coverage
 
@@ -766,8 +831,11 @@ Other future AI or Raspberry Pi projects should have their own directories.
 - Feature CSV import and data type restoration
 - Shared feature validation and invalid-data rejection
 - Prevention of partial exports caused by validation failures
+- ML baseline pipeline construction and configuration
+- Binary classification metrics and invalid-label handling
+- Training/Validation recording isolation and split validation
 
-Last verified result: **81 passed**.
+Last verified result: **93 passed**.
 
 ## Current Dependencies
 
@@ -776,6 +844,7 @@ Last verified result: **81 passed**.
 - NumPy 2.5.4
 - SciPy 1.18.1
 - Matplotlib 3.11.2
+- scikit-learn 1.9.1
 
 ---
 
@@ -792,13 +861,16 @@ These are ongoing issues, not necessarily blockers.
 - Improve timestamp validation for additional edge cases.
 
 ### Machine Learning
-- Expand dataset beyond two recordings.
-- Design leakage-resistant dataset splits.
-- Select thresholds using development data only.
-- Evaluate models on untouched source recordings.
-- Compare RMS with additional time-domain and frequency-domain features.
-- Investigate performance across loads, speeds, and fault severities.
-- Avoid treating overlapping windows as independent test samples.
+- Expand the dataset to cover more recordings, operating conditions, and fault severities.
+- Investigate whether recordings share physical bearings or defect instances.
+- Design evaluation splits that better isolate independent physical bearings or experiments.
+- Do not reuse the Step 26 evaluated Holdout Test for iterative model selection.
+- Compare time-domain features with additional frequency-domain and time-frequency features.
+- Evaluate performance across different loads, speeds, fault types, and fault severities.
+- Investigate whether simple RMS-based methods remain competitive on more challenging datasets.
+- Evaluate robustness to realistic sensor noise, distribution shifts, and unseen equipment.
+- Avoid treating overlapping windows as statistically independent observations.
+- Consider recording-level or bearing-level performance summaries rather than window-level accuracy alone.
 
 ### Software Engineering
 - Improve reuse of CWRU loading functions across scripts.
@@ -820,6 +892,7 @@ These are ongoing issues, not necessarily blockers.
 | M1-E | Exploratory Fault Classification | Completed |
 | M1-F | Independent Model Evaluation | Completed |
 | M1-G | ML-ready Feature Dataset | Completed |
+| M1-H | Reproducible ML Baseline and Holdout Evaluation | Completed |
 | M2 | ML Models and Dataset Expansion | Planned |
 | M3 | Advanced Signal Features and Sensor Fusion | Planned |
 | M4 | Interactive Demonstration and Portfolio Product | Planned |
