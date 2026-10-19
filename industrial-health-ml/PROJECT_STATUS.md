@@ -9,7 +9,7 @@
 **Last Completed Step:** Step 26 — Reproducible ML Baseline and Holdout Evaluation  
 **Next Step:** Step 27 — Dataset Expansion and Independent-Bearing Evaluation Planning  
 **Automated Tests:** 93 passed (last verified)  
-**Last Confirmed GitHub Commit:** `dfc6313` (Step 24 documentation)  
+**Last Confirmed GitHub Commit:** `cbf9d88` (Step 26 ML baseline and holdout evaluation)  
 
 ---
 
