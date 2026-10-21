@@ -25,7 +25,7 @@ signal inspection, but not model-based prediction evaluation.
 
 Evaluate generalization to different operating loads.
 
-Status: Planning.
+Status: Protocol frozen. See "Frozen Experiment A — Cross-load Engineering Benchmark" below.
 
 ## Proposed Experiment B — Held-Out Fault Condition
 
@@ -61,7 +61,8 @@ Important:
 - The proposed 3 HP evaluation is not a fully untouched holdout.
 - This protocol assesses load-condition generalization, not
   independent-bearing generalization.
-- The split remains provisional until explicitly frozen.
+- This preliminary split was subsequently frozen under
+  "Frozen Experiment A — Cross-load Engineering Benchmark" below.
 
 ## Historical Exposure Audit
 
@@ -90,9 +91,49 @@ The proposed Cross-load Evaluation uses 16 recordings.
 - The final evaluation protocol must be frozen before model fitting
   and evaluation.
 
+## Frozen Experiment A — Cross-load Engineering Benchmark
+
+Status: Protocol frozen before Step 27 model training.
+
+### Dataset Splits
+
+- Training: 0 and 1 HP
+- Validation: 2 HP
+- Evaluation: 3 HP
+- Split unit: complete recording
+- Task: binary classification (Normal=0, Fault=1)
+
+### Model Configuration
+
+- Model: LogisticRegression
+- Preprocessing: StandardScaler
+- Features: mean, std, rms
+- Window size: 1200 samples
+- Window step: 600 samples
+- Classification threshold: 0.5
+- Fit preprocessing and classifier using Training only.
+
+### Evaluation Metrics
+
+- Primary: Recall, Specificity, Balanced Accuracy
+- Secondary: Precision, F1, Accuracy
+- Report overall and per-recording performance.
+- Report detection recall separately for each fault type.
+
+### Scientific Limitations
+
+- Recording-level separation does not guarantee bearing independence.
+- Different loads may share physical defect instances.
+- Step 26 previously evaluated recordings 100 and 108.
+- This experiment is a cross-load engineering benchmark,
+  not an untouched independent-bearing evaluation.
+- Do not change the model configuration after viewing
+  Evaluation results.
+
 ## Decisions Pending
 
-- Selection of the primary evaluation protocol.
-- Selection of Train, Validation, and Test recordings.
-- Method for obtaining independent Normal evaluation data.
-- Definition of evaluation metrics and reporting units.
+- Design Experiment B for held-out fault-type generalization.
+- Determine how to obtain independent Normal evaluation recordings.
+- Investigate physical-bearing and defect-instance independence.
+- Determine whether an additional public bearing dataset is needed
+  for stronger independent-equipment generalization testing.
