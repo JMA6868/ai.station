@@ -67,3 +67,34 @@ def test_reject_invalid_binary_labels(y_true, y_pred):
 
     with pytest.raises(ValueError, match="Invalid binary label"):
         evaluate_classifier(y_true, y_pred)
+
+def test_specificity_and_balanced_accuracy():
+    """Verify metrics when normal and fault detection differ."""
+
+    # TN=3, FP=1, FN=2, TP=2
+    y_true = [0, 0, 0, 0, 1, 1, 1, 1]
+    y_pred = [0, 0, 0, 1, 0, 0, 1, 1]
+
+    result = evaluate_classifier(y_true, y_pred)
+
+    assert result["tn"] == 3
+    assert result["fp"] == 1
+    assert result["fn"] == 2
+    assert result["tp"] == 2
+
+    assert result["specificity"] == pytest.approx(0.75)
+    assert result["recall"] == pytest.approx(0.50)
+    assert result["balanced_accuracy"] == pytest.approx(0.625)
+
+
+def test_specificity_with_no_normal_samples():
+    """Check the current convention for missing normal samples."""
+
+    y_true = [1, 1, 1]
+    y_pred = [1, 1, 0]
+
+    result = evaluate_classifier(y_true, y_pred)
+
+    assert result["specificity"] == 0.0
+    assert result["recall"] == pytest.approx(2 / 3)
+    assert result["balanced_accuracy"] == pytest.approx(1 / 3)

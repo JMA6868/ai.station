@@ -31,6 +31,20 @@ def evaluate_classifier(y_true, y_pred):
         labels=[0, 1],
     ).ravel()
 
+    specificity = (
+        tn / (tn + fp)
+        if (tn + fp) > 0
+        else 0.0
+    )
+
+    sensitivity = (
+        tp / (tp + fn)
+        if (tp + fn) > 0
+        else 0.0
+    )
+
+    balanced_accuracy = (sensitivity + specificity) / 2
+
     return {
         "accuracy": float(accuracy_score(y_true, y_pred)),
         "precision": float(
@@ -46,4 +60,6 @@ def evaluate_classifier(y_true, y_pred):
         "fp": int(fp),
         "fn": int(fn),
         "tp": int(tp),
+        "specificity": float(specificity),
+        "balanced_accuracy": float(balanced_accuracy),
     }
