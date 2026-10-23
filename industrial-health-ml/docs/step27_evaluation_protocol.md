@@ -282,3 +282,87 @@ Evaluation executed after pre-evaluation checkpoint 099ebb7.
 - Investigate physical-bearing and defect-instance independence.
 - Determine whether an additional public bearing dataset is needed
   for stronger independent-equipment generalization testing.
+
+## Frozen Experiment B — Held-out Ball Fault Benchmark
+
+Status: Protocol frozen before Experiment B model training.
+
+### Objective
+
+Evaluate whether a binary fault detector trained without Ball Fault
+recordings can detect Ball Fault under a different motor load.
+
+This benchmark investigates held-out fault-type detection,
+not independent-bearing generalization.
+
+### Dataset Splits
+
+Training (0–1 HP):
+- Normal: 97, 98
+- Inner Race: 105, 106
+- Outer Race @ 6:00: 130, 131
+- Ball Fault: excluded
+
+Validation (2 HP):
+- Normal: 99
+- Inner Race: 107
+- Outer Race @ 6:00: 132
+- Ball Fault: excluded
+
+Evaluation (3 HP):
+- Normal: 100
+- Ball Fault: 121
+
+All recordings from the Ball Fault condition are excluded
+from model fitting and validation.
+
+### Frozen Model Configuration
+
+- Task: binary classification (Normal=0, Fault=1)
+- Model: LogisticRegression
+- Preprocessing: StandardScaler
+- Features: mean, std, rms
+- Window size: 1200 samples
+- Window step: 600 samples
+- Classification threshold: 0.5
+- LogisticRegression max_iter: 1000
+- LogisticRegression random_state: 42
+- Fit preprocessing and classifier using Training only.
+- Do not modify model parameters based on Evaluation results.
+
+### Evaluation Metrics
+
+Primary:
+- Held-out Ball Fault Recall
+- Normal Specificity
+
+Secondary:
+- Balanced Accuracy
+- Precision
+- F1
+- Accuracy
+- Confusion Matrix
+
+Report per-recording results separately.
+
+### Scientific Limitations
+
+- Recording 121 was already evaluated in Experiment A.
+- Recording 100 was previously evaluated in Step 26
+  and Experiment A.
+- Experiment B is not an untouched independent test.
+- Different recordings may share physical bearing or
+  defect-instance identities.
+- Overlapping windows are not statistically independent.
+- Unseen Ball Fault detection does not establish
+  generalization to arbitrary unseen fault conditions.
+- This experiment evaluates binary fault detection,
+  not multiclass fault classification.
+
+### Evaluation Rules
+
+- Freeze this protocol before Experiment B training.
+- Do not use Ball Fault recordings for training or validation.
+- Do not adjust the model based on Evaluation performance.
+- Report the first Evaluation result regardless of performance.
+- Preserve Experiment A code, splits and reported results.
