@@ -130,6 +130,103 @@ Status: Protocol frozen before Step 27 model training.
 - Do not change the model configuration after viewing
   Evaluation results.
 
+## Experiment A — Training and Validation Results
+
+Status: Training and Validation completed.
+Evaluation (3 HP) not yet executed.
+
+### Implementation
+
+- Runner: run_step27_cross_load.py
+- Model: StandardScaler + LogisticRegression
+- Features: mean, std, rms
+- Window size: 1200 samples
+- Window step: 600 samples
+- Classification threshold: 0.5
+- Model configuration unchanged from frozen protocol.
+- StandardScaler and classifier fitted on Training data only.
+
+### Training Results — 0 and 1 HP
+
+- Recordings: 97, 98, 105, 106, 118, 119, 130, 131
+- Total windows: 2422
+- Normal windows: 1210
+- Fault windows: 1212
+
+Metrics:
+
+- Accuracy: 1.0000
+- Precision: 1.0000
+- Recall: 1.0000
+- F1: 1.0000
+- Specificity: 1.0000
+- Balanced Accuracy: 1.0000
+- Confusion Matrix: TN=1210, FP=0, FN=0, TP=1212
+
+### Validation Results — 2 HP
+
+- Recordings: 99, 107, 120, 132
+- Total windows: 1411
+- Normal windows: 807
+- Fault windows: 604
+
+Metrics:
+
+- Accuracy: 1.0000
+- Precision: 1.0000
+- Recall: 1.0000
+- F1: 1.0000
+- Specificity: 1.0000
+- Balanced Accuracy: 1.0000
+- Confusion Matrix: TN=807, FP=0, FN=0, TP=604
+
+### Per-recording Validation Results
+
+| Recording | Condition | Windows | Correct | Accuracy |
+|---|---|---:|---:|---:|
+| 99 | Normal | 807 | 807 | 1.0000 |
+| 107 | Inner Race Fault | 202 | 202 | 1.0000 |
+| 120 | Ball Fault | 201 | 201 | 1.0000 |
+| 132 | Outer Race Fault @ 6:00 | 201 | 201 | 1.0000 |
+
+For the Normal recording, per-recording accuracy corresponds
+to Specificity.
+
+For each Fault recording, per-recording accuracy corresponds
+to Recall.
+
+### Automated Testing
+
+- Full regression suite: 120 passed.
+- Dataset integrity and recording isolation checks passed.
+- Per-recording reporting tests passed.
+
+### Interpretation and Limitations
+
+- The frozen baseline achieved perfect window-level classification
+  on the specified 2 HP Validation recordings.
+- These results support cross-load performance within the selected
+  CWRU recordings.
+- Overlapping windows are not independent observations.
+- Recording-level isolation does not establish independent-bearing
+  or independent-defect-instance generalization.
+- The features std and rms may capture similar amplitude-related
+  information; perfect accuracy does not establish that the model
+  learned fault-specific physical signatures.
+- Only one Normal recording is included in the 2 HP Validation set.
+- Real-world deployment performance has not been established.
+
+### Pre-evaluation Checkpoint
+
+- Training and Validation analysis completed before 3 HP Evaluation.
+- No 3 HP Evaluation predictions have been generated in Step 27.
+- Model configuration, features, preprocessing, windowing,
+  and classification threshold remain frozen.
+- Do not tune the model based on 3 HP Evaluation results.
+- Report 3 HP results even if performance decreases.
+- Record that recordings 100 and 108 were previously evaluated
+  in Step 26; the benchmark is not a pristine final holdout.
+
 ## Decisions Pending
 
 - Design Experiment B for held-out fault-type generalization.

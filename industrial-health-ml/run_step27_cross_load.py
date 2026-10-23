@@ -63,6 +63,45 @@ def validate_cross_load_records(records, split_name):
                 f"Recording {recording_id}: incorrect motor load"
             )
 
+from collections import defaultdict
+
+
+def evaluate_per_recording(records, predictions):
+    """Evaluate classification accuracy for each recording."""
+
+    if len(records) != len(predictions):
+        raise ValueError(
+            "Records and predictions must have equal lengths"
+        )
+
+    if not records:
+        raise ValueError("Cannot evaluate empty records")
+
+    grouped = defaultdict(lambda: {"total": 0, "correct": 0})
+
+    for row, predicted_label in zip(records, predictions):
+        recording_id = row["recording_id"]
+        actual_label = row["label"]
+
+        grouped[recording_id]["total"] += 1
+
+        if actual_label == predicted_label:
+            grouped[recording_id]["correct"] += 1
+
+    results = {}
+
+    for recording_id in sorted(grouped):
+        total = grouped[recording_id]["total"]
+        correct = grouped[recording_id]["correct"]
+
+        results[recording_id] = {
+            "total": total,
+            "correct": correct,
+            "accuracy": correct / total,
+        }
+
+    return results
+
 def main():
     """Train on 0-1 HP and validate on 2 HP."""
 
@@ -123,6 +162,26 @@ def main():
         print(f"\n{name} - {count} windows")
         for metric, value in metrics.items():
             print(f"{metric}: {value}")
+
+    # Per-recording validation analysis.
+    per_recording = evaluate_per_recording(
+        validation,
+        val_pred,
+    )
+
+    print("\nValidation - Per-recording Results")
+
+    for recording_id, metrics in per_recording.items():
+        metadata = CWRU_RECORDING_METADATA[recording_id]
+
+        print(
+            f"ID={recording_id}, "
+            f"Condition={metadata['condition']}, "
+            f"Load={metadata['load_hp']} HP, "
+            f"Windows={metrics['total']}, "
+            f"Correct={metrics['correct']}, "
+            f"Accuracy={metrics['accuracy']:.4f}"
+        )
 
     print("\nStep 27 Cross-load Train/Validation: COMPLETED")
 

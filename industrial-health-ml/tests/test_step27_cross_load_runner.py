@@ -1,6 +1,10 @@
 import pytest
 
-from run_step27_cross_load import validate_cross_load_records
+from run_step27_cross_load import (
+    validate_cross_load_records,
+    evaluate_per_recording,
+)
+
 from src.cross_load_split import CROSS_LOAD_SPLIT
 from src.cwru_metadata import CWRU_RECORDING_METADATA
 
@@ -59,3 +63,43 @@ def test_reject_unsupported_split():
 
     with pytest.raises(ValueError, match="Unsupported split"):
         validate_cross_load_records(records, "evaluation")
+
+def test_evaluate_per_recording():
+    """Verify per-recording accuracy calculations."""
+
+    records = [
+        {"recording_id": 99, "label": 0},
+        {"recording_id": 99, "label": 0},
+        {"recording_id": 99, "label": 0},
+        {"recording_id": 107, "label": 1},
+        {"recording_id": 107, "label": 1},
+    ]
+
+    predictions = [0, 0, 1, 1, 0]
+
+    results = evaluate_per_recording(records, predictions)
+
+    assert results[99]["total"] == 3
+    assert results[99]["correct"] == 2
+    assert results[99]["accuracy"] == pytest.approx(2 / 3)
+
+    assert results[107]["total"] == 2
+    assert results[107]["correct"] == 1
+    assert results[107]["accuracy"] == pytest.approx(0.5)
+
+
+def test_evaluate_per_recording_rejects_length_mismatch():
+    """Reject records and predictions with different lengths."""
+
+    records = [{"recording_id": 99, "label": 0}]
+    predictions = [0, 0]
+
+    with pytest.raises(ValueError, match="equal lengths"):
+        evaluate_per_recording(records, predictions)
+
+
+def test_evaluate_per_recording_rejects_empty_input():
+    """Reject empty evaluation datasets."""
+
+    with pytest.raises(ValueError, match="empty records"):
+        evaluate_per_recording([], [])
