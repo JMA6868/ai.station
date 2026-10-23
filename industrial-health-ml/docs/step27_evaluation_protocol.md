@@ -227,6 +227,54 @@ to Recall.
 - Record that recordings 100 and 108 were previously evaluated
   in Step 26; the benchmark is not a pristine final holdout.
 
+## Experiment A — Frozen 3 HP Evaluation Results
+
+Status: Completed.
+Evaluation executed after pre-evaluation checkpoint 099ebb7.
+
+### Evaluation Configuration
+
+- Training: 0 and 1 HP
+- Evaluation: 3 HP
+- Model: StandardScaler + LogisticRegression
+- Features: mean, std, rms
+- Classification threshold: 0.5
+- Model configuration unchanged after Validation.
+- Evaluation data not used for model fitting.
+
+### Overall Results
+
+- Total windows: 1415
+- Normal windows: 808
+- Fault windows: 607
+- Accuracy: 1.0000
+- Precision: 1.0000
+- Recall: 1.0000
+- F1: 1.0000
+- Specificity: 1.0000
+- Balanced Accuracy: 1.0000
+- Confusion Matrix: TN=808, FP=0, FN=0, TP=607
+
+### Per-recording Evaluation
+
+| Recording | Condition | Windows | Correct | Accuracy |
+|---|---|---:|---:|---:|
+| 100 | Normal | 808 | 808 | 1.0000 |
+| 108 | Inner Race Fault | 203 | 203 | 1.0000 |
+| 121 | Ball Fault | 201 | 201 | 1.0000 |
+| 133 | Outer Race Fault @ 6:00 | 203 | 203 | 1.0000 |
+
+### Interpretation
+
+- All selected 3 HP Evaluation windows were classified correctly.
+- No model parameters were changed based on Evaluation results.
+- This is a cross-load engineering benchmark.
+- Recordings 100 and 108 were previously evaluated in Step 26.
+- Independent-bearing and independent-defect-instance
+  generalization remain unverified.
+- Perfect binary classification does not establish
+  multiclass fault identification or deployment readiness.
+
 ## Decisions Pending
 
 - Design Experiment B for held-out fault-type generalization.
