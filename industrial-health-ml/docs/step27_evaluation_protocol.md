@@ -451,3 +451,53 @@ Held-out Ball Fault Evaluation not yet executed.
 - Report the first Evaluation outcome regardless of performance.
 - Recording 100 and 121 have historical exposure in earlier experiments;
   this is not a pristine independent holdout.
+
+## Experiment B — Frozen Held-out Ball Fault Evaluation Results
+
+Status: Completed.
+Evaluation executed after pre-evaluation checkpoint e9a5820.
+
+### Overall Results
+
+- Evaluation recordings: 100, 121
+- Total windows: 1009
+- Normal windows: 808
+- Ball Fault windows: 201
+- Accuracy: 0.800792864222002
+- Precision: 0.0000
+- Recall: 0.0000
+- F1: 0.0000
+- Specificity: 1.0000
+- Balanced Accuracy: 0.5000
+- Confusion Matrix: TN=808, FP=0, FN=201, TP=0
+
+### Per-recording Results
+
+| Recording | Condition | Windows | Correct | Metric |
+|---|---|---:|---:|---|
+| 100 | Normal | 808 | 808 | Specificity=1.0000 |
+| 121 | Ball Fault | 201 | 0 | Recall=0.0000 |
+
+### Key Finding
+
+The frozen model predicted every Evaluation window as Normal.
+
+The model correctly identified all Normal windows but failed
+to detect all held-out Ball Fault windows.
+
+Perfect Training and Validation performance did not translate
+to detection of the held-out fault condition.
+
+### Interpretation and Limitations
+
+- The result demonstrates failure on the selected held-out
+  Ball Fault recording under the frozen Experiment B protocol.
+- The mechanism of failure has not yet been established.
+- Comparing Experiments A and B does not isolate fault-type
+  exposure as the only changed factor.
+- Recordings 100 and 121 were previously evaluated in earlier
+  experiments; this is not a pristine independent holdout.
+- Window-level observations are overlapping and correlated.
+- No model or threshold changes were made after Evaluation.
+- Further investigation must be labeled exploratory and must
+  not overwrite this frozen Evaluation result.
