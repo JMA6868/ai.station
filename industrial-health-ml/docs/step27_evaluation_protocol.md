@@ -366,3 +366,88 @@ Report per-recording results separately.
 - Do not adjust the model based on Evaluation performance.
 - Report the first Evaluation result regardless of performance.
 - Preserve Experiment A code, splits and reported results.
+
+## Experiment B — Training and Validation Results
+
+Status: Training and Validation completed.
+Held-out Ball Fault Evaluation not yet executed.
+
+### Implementation
+
+- Runner: run_step27_experiment_b.py
+- Model: StandardScaler + LogisticRegression
+- Features: mean, std, rms
+- Window size: 1200 samples
+- Window step: 600 samples
+- Classification threshold: 0.5
+- Model configuration unchanged from frozen Experiment B protocol.
+- StandardScaler and classifier fitted on Training data only.
+- Ball Fault excluded from Training and Validation.
+
+### Training Results — 0 and 1 HP
+
+- Recordings: 97, 98, 105, 106, 130, 131
+- Total windows: 2018
+- Normal windows: 1210
+- Fault windows: 808
+- Accuracy: 1.0000
+- Precision: 1.0000
+- Recall: 1.0000
+- F1: 1.0000
+- Specificity: 1.0000
+- Balanced Accuracy: 1.0000
+- Confusion Matrix: TN=1210, FP=0, FN=0, TP=808
+
+### Validation Results — 2 HP
+
+- Recordings: 99, 107, 132
+- Total windows: 1210
+- Normal windows: 807
+- Fault windows: 403
+- Accuracy: 1.0000
+- Precision: 1.0000
+- Recall: 1.0000
+- F1: 1.0000
+- Specificity: 1.0000
+- Balanced Accuracy: 1.0000
+- Confusion Matrix: TN=807, FP=0, FN=0, TP=403
+
+### Per-recording Validation Results
+
+| Recording | Condition | Windows | Correct | Accuracy |
+|---|---|---:|---:|---:|
+| 99 | Normal | 807 | 807 | 1.0000 |
+| 107 | Inner Race Fault | 202 | 202 | 1.0000 |
+| 132 | Outer Race Fault @ 6:00 | 201 | 201 | 1.0000 |
+
+### Automated Testing
+
+- Full regression suite: 137 passed.
+- Experiment B dataset integrity checks passed.
+- Training/Validation isolation tests passed.
+
+### Interpretation and Limitations
+
+- The baseline correctly classified all selected Training and
+  Validation windows.
+- Validation includes Inner Race and Outer Race faults,
+  but no Ball Fault.
+- Perfect Validation accuracy does not establish detection
+  of the held-out Ball Fault condition.
+- Recording-level separation does not establish physical-bearing
+  independence.
+- Overlapping windows are not statistically independent.
+- Real-world deployment performance remains unverified.
+
+### Pre-evaluation Checkpoint
+
+- Training and Validation completed before Experiment B Evaluation.
+- No Experiment B model predictions have been generated for
+  the held-out Ball Fault Evaluation dataset.
+- Model configuration and threshold remain frozen.
+- Evaluation recordings: Normal 100 and Ball Fault 121.
+- Primary metrics: Ball Fault Recall and Normal Specificity.
+- Do not modify model configuration after viewing Evaluation results.
+- Report the first Evaluation outcome regardless of performance.
+- Recording 100 and 121 have historical exposure in earlier experiments;
+  this is not a pristine independent holdout.
