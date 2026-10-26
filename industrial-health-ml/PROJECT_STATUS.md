@@ -6,10 +6,10 @@
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
-**Last Completed Step:** Step 26 — Reproducible ML Baseline and Holdout Evaluation  
-**Next Step:** Step 27 — Dataset Expansion and Independent-Bearing Evaluation Planning  
-**Automated Tests:** 93 passed (last verified)  
-**Last Confirmed GitHub Commit:** `cbf9d88` (Step 26 ML baseline and holdout evaluation)  
+**Last Completed Step:** Step 27.10 — Experiment B Exploratory Failure Analysis  
+**Next Step:** Step 27.11 — Model Improvement Research Planning  
+**Automated Tests:** 144 passed (last full suite verified)  
+**Last Confirmed GitHub Commit:** `707af7d` (Step 27.10 exploratory failure analysis)  
 
 ---
 
@@ -781,6 +781,125 @@ Other future AI or Raspberry Pi projects should have their own directories.
 - [x] Pass the automated regression test suite.
 
 **Status: Completed**
+
+## Phase I — Cross-load and Held-out Fault Generalization Research
+
+### Step 27 — Experiment A: Cross-load Benchmark
+
+**Completed**
+
+- Expanded the CWRU benchmark to Normal, Inner Race, Ball, and Outer Race faults.
+- Defined recording-level Train, Validation, and Evaluation splits.
+- Used 0–1 HP recordings for training, 2 HP for validation, and 3 HP for evaluation.
+- Preserved the Mean, Std, RMS feature set and frozen Logistic Regression configuration.
+- Documented the evaluation protocol before final evaluation.
+
+**Results**
+
+- Training: 2,422 windows.
+- Validation: 1,411 windows.
+- Evaluation: 1,415 windows.
+- Evaluation Accuracy: 100%.
+- All four 3 HP evaluation recordings were classified correctly.
+- Results documented in `docs/step27_evaluation_protocol.md`.
+
+**Limitations**
+
+- Different load recordings do not establish independent physical bearing evaluation.
+- Overlapping windows are correlated.
+- The evaluation recordings have already been examined and cannot be reused as untouched holdouts.
+- Perfect CWRU performance does not establish real-world industrial generalization.
+
+**Status: Completed**
+
+### Step 27 — Experiment B: Held-out Ball Fault Benchmark
+
+**Completed**
+
+- Designed a held-out fault-type experiment excluding all Ball Fault recordings from Training and Validation.
+- Froze the recording split and model configuration before final evaluation.
+- Training recordings: 97, 98, 105, 106, 130, 131.
+- Validation recordings: 99, 107, 132.
+- Evaluation recordings: 100 (Normal) and 121 (unseen Ball Fault).
+- Used the existing StandardScaler and Logistic Regression pipeline with Mean, Std, and RMS features.
+- Committed the pre-evaluation checkpoint before executing the frozen evaluation.
+
+**Results**
+
+- Training: 2,018 windows; Accuracy 100%.
+- Validation: 1,210 windows; Accuracy 100%.
+- Evaluation: 1,009 windows.
+- Evaluation Accuracy: 80.08%.
+- Ball Fault Recall: 0%.
+- Normal Specificity: 100%.
+- Balanced Accuracy: 50%.
+- Confusion matrix: TN=808, FP=0, FN=201, TP=0.
+- All 201 held-out Ball Fault windows were incorrectly classified as Normal.
+- Pre-evaluation checkpoint: `e9a5820`.
+- Frozen evaluation commit: `17ee4bc`.
+- Results documented in `docs/step27_evaluation_protocol.md`.
+
+**Limitations**
+
+- The model failed to detect the held-out Ball Fault recording.
+- The evaluation data must not be reused as an untouched test set for subsequent model tuning.
+- Experiment A and Experiment B have different training compositions, preventing a strictly controlled attribution of their performance difference.
+- Recording-level isolation does not guarantee physical bearing independence.
+- Overlapping windows are correlated observations.
+
+**Status: Completed**
+
+### Step 27.10 — Exploratory Failure Analysis
+
+**Completed**
+
+- Analyzed the frozen Experiment B predictions after evaluation.
+- Compared RMS distributions across Normal, Inner Race, Outer Race, and Ball Fault recordings.
+- Examined Logistic Regression fault probabilities and coefficients.
+- Decomposed model decision scores into Mean, Std, RMS, and intercept contributions.
+- Preserved all original frozen evaluation results.
+
+**Results**
+
+- Normal recording 100 Mean RMS: 0.065823.
+- Ball Fault recording 121 Mean RMS: 0.153508.
+- Normal Mean Fault Probability: 0.003508.
+- Ball Fault Mean Fault Probability: 0.293836.
+- Ball Fault probability range: 0.140158–0.443154.
+- Normal Average Decision Score: -5.681585.
+- Ball Fault Average Decision Score: -0.897000.
+- All 201 Ball Fault windows remained below the frozen classification threshold of 0.5.
+- Analysis documented in `docs/step27_exploratory_failure_analysis.md`.
+- Confirmed GitHub commit: `707af7d`.
+
+**Interpretation**
+
+The model assigned higher fault scores to the held-out Ball Fault recording than to the Normal recording, but all Ball Fault scores remained below the frozen decision threshold.
+
+The results support the hypothesis that the model's decision boundary was strongly influenced by vibration amplitude features observed in the known fault classes.
+
+This is an exploratory explanation, not proof of a physical causal mechanism.
+
+**Limitations**
+
+- Analysis was conducted after the frozen evaluation.
+- Recording 121 is no longer an untouched holdout.
+- STD and RMS are highly correlated.
+- Predicted probabilities have not been established as calibrated probabilities.
+- These findings do not justify reporting post-hoc threshold changes as independent test improvements.
+
+**Status: Completed**
+
+### Step 27.11 — Model Improvement Research Planning
+
+**Status: In Progress**
+
+- Compare supervised fault classification and normal-only anomaly detection approaches.
+- Investigate feature representations beyond Mean, Std, and RMS.
+- Define evaluation protocols that prevent test-set reuse and misleading generalization claims.
+- Prioritize independent bearing or equipment evaluation when suitable data becomes available.
+
+No new model training or evaluation has been performed in this step.
 
 ---
 
