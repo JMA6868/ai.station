@@ -225,3 +225,58 @@ Limitations:
 - No independent physical-bearing generalization is established.
 - Additional independent datasets are needed before making
   robust unknown-fault detection claims.
+
+## Initial RMS Baseline — Synthetic Amplitude Scaling Analysis
+
+Status: Completed — Exploratory Robustness Analysis.
+
+Objective:
+
+Investigate how the Normal-only RMS detector responds to
+synthetic increases in Normal vibration signal amplitude.
+
+Configuration:
+
+- Normal Validation Recording: 99 (2 HP).
+- Training-derived RMS P99 threshold: 0.078705085.
+- Threshold remained unchanged.
+- RMS values were multiplied by positive scaling factors.
+- No new model was fitted or trained.
+
+Results:
+
+| Scale | Flagged Normal Windows | Flag Rate |
+|---|---:|---:|
+| 1.00 | 0/807 | 0.0000% |
+| 1.05 | 0/807 | 0.0000% |
+| 1.10 | 1/807 | 0.1239% |
+| 1.15 | 35/807 | 4.3371% |
+| 1.20 | 230/807 | 28.5006% |
+
+Interpretation:
+
+The fixed RMS threshold was sensitive to synthetic
+amplitude increases in Normal vibration data.
+
+At 1.20x amplitude scaling, 28.5006% of Normal windows
+were incorrectly flagged as anomalous.
+
+The detector's ability to flag faults does not guarantee
+robustness against changes in Normal signal amplitude.
+
+Limitations:
+
+- Synthetic amplitude scaling is not equivalent to measured
+  changes in actual industrial operating conditions.
+- Only one Normal recording was examined.
+- Recording 99 was previously used for Normal Validation.
+- Overlapping windows are correlated.
+- These results are exploratory, not independent testing.
+- No physical bearing or equipment independence is established.
+
+Research Implication:
+
+Future candidate approaches should investigate whether
+additional signal features can distinguish fault-related
+changes from global amplitude scaling without relying
+exclusively on absolute RMS magnitude.
