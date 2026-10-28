@@ -280,3 +280,69 @@ Future candidate approaches should investigate whether
 additional signal features can distinguish fault-related
 changes from global amplitude scaling without relying
 exclusively on absolute RMS magnitude.
+
+## Crest Factor — Real CWRU Exploratory Analysis
+
+Status: Completed — Exploratory Feature Analysis.
+
+Feature definition:
+
+Crest Factor = Maximum Absolute Amplitude / RMS.
+
+For a nonzero signal, Crest Factor is invariant under
+nonzero uniform amplitude scaling.
+
+Normal and known-fault results:
+
+| Recording | Condition | Mean CF |
+|---|---|---:|
+| 97 | Normal | 3.061329 |
+| 98 | Normal | 3.137019 |
+| 105 | Inner Race | 4.903449 |
+| 106 | Inner Race | 4.728972 |
+| 130 | Outer Race | 4.795382 |
+| 131 | Outer Race | 4.860786 |
+
+Observed window-level overlap:
+
+- Normal CF range: 2.495805–4.469725.
+- Inner Race CF range: 3.837061–5.944290.
+- Outer Race CF range: 4.102299–5.522714.
+- Inner Race windows at/below Normal maximum: 75/403.
+- Outer Race windows at/below Normal maximum: 29/405.
+
+Post-evaluation Ball Fault analysis:
+
+- Recording: 121 (Ball Fault, 3 HP).
+- Windows: 201.
+- Minimum CF: 2.621595.
+- Mean CF: 3.317903.
+- Median CF: 3.276817.
+- P95 CF: 3.953214.
+- Maximum CF: 4.503763.
+
+Interpretation:
+
+The held-out Ball Fault recording showed a Mean Crest Factor
+closer to the observed Normal recordings than to the known
+Inner Race and Outer Race Fault recordings.
+
+RMS and Crest Factor capture different signal characteristics.
+Crest Factor should not simply replace RMS based on these data.
+
+Limitations:
+
+- All results are exploratory.
+- Recording 121 was previously evaluated and analyzed.
+- These data cannot support a fresh independent test claim.
+- Crest Factor distributions overlap across conditions.
+- Overlapping windows are correlated.
+- Uniform amplitude invariance does not establish robustness
+  to all real operating-condition changes.
+- No independent bearing generalization has been established.
+
+Next Research Direction:
+
+Investigate whether RMS and amplitude-invariant signal
+features provide complementary information, using an
+explicitly documented exploratory experimental protocol.
