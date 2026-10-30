@@ -6,10 +6,10 @@
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
-**Last Completed Step:** Step 27.10 — Experiment B Exploratory Failure Analysis  
-**Next Step:** Step 27.11 — Model Improvement Research Planning  
-**Automated Tests:** 144 passed (last full suite verified)  
-**Last Confirmed GitHub Commit:** `707af7d` (Step 27.10 exploratory failure analysis)  
+**Last Completed Step:** Step 27.11L — Dual-Threshold Training Calibration  
+**Next Step:** Step 27.11L — Exploratory Dual-Threshold Comparison  
+**Automated Tests:** 172 passed (last full suite verified)  
+**Last Confirmed GitHub Commit:** `5de6c75` (dual-threshold training calibration)  
 
 ---
 
@@ -81,10 +81,13 @@ Other future AI or Raspberry Pi projects should have their own directories.
 | Trained ML classification model | Completed — Logistic Regression with StandardScaler |
 | Reproducible ML evaluation | Completed — Training, Validation, and Final Holdout |
 | ML model robustness investigation | Completed — exploratory feature and signal noise experiments |
+| Normal-only RMS anomaly detection | Completed — exploratory RMS P99 baseline |
+| Crest Factor feature research | Completed — exploratory signal analysis |
+| Dual-Threshold anomaly detection | In Progress — implemented and training-calibrated |
 | Multimodal sensor fusion | Not started |
 | Interactive ML demonstration | Not started |
 
-**Current focus:** Step 27 — Plan dataset expansion and stronger generalization evaluation, emphasizing independent physical bearings, additional operating conditions, and leakage-resistant experimental design. The Step 26 Holdout Test has already been evaluated and must not be treated as an untouched test set for future model selection.
+**Current focus:** Step 27.11L — Exploratory Dual-Threshold Comparison. RMS and Crest Factor thresholds have been calibrated using Normal Training Recordings 97 and 98. The next objective is to compare fixed-threshold detector behavior while explicitly distinguishing exploratory analysis from independent evaluation.
 
 ---
 
@@ -890,16 +893,55 @@ This is an exploratory explanation, not proof of a physical causal mechanism.
 
 **Status: Completed**
 
-### Step 27.11 — Model Improvement Research Planning
+### Step 27.11 — Normal-only Anomaly Detection and Feature Research
 
-**Status: In Progress**
+**Completed Research**
 
-- Compare supervised fault classification and normal-only anomaly detection approaches.
-- Investigate feature representations beyond Mean, Std, and RMS.
-- Define evaluation protocols that prevent test-set reuse and misleading generalization claims.
-- Prioritize independent bearing or equipment evaluation when suitable data becomes available.
+- Established a normal-only anomaly detection protocol using CWRU recordings 97 and 98 for training.
+- Evaluated a training-derived RMS P99 threshold of 0.078705085.
+- Observed zero RMS alarms on Normal Recording 99 (807 windows); this is exploratory, not independent validation.
+- Demonstrated that synthetic amplitude scaling can cause RMS-based false alarms.
+- Implemented exploratory Crest Factor feature extraction and automated tests.
+- Analyzed Crest Factor distributions for Normal, Inner Race, Outer Race, and previously evaluated Ball Fault recordings.
+- Found that Ball Fault Recording 121 has a Crest Factor distribution closer to Normal than the examined Inner Race and Outer Race recordings.
+- Implemented a combined RMS and Crest Factor feature module.
+- Investigated within-recording RMS–CF correlations and synthetic amplitude scaling.
+- Implemented a Dual-Threshold anomaly detector using an OR decision rule.
+- Completed training-only calibration of the Dual-Threshold detector.
 
-No new model training or evaluation has been performed in this step.
+**Training Calibration Results**
+
+- Normal training recordings: 97 and 98.
+- Total normal training windows: 1210.
+- RMS P99 threshold: 0.078705085.
+- Crest Factor P99 threshold: 3.951375434.
+- RMS-only training alarms: 13/1210 (1.07%).
+- Dual-Threshold training alarms: 25/1210 (2.07%).
+- Dual-Threshold added 12 alarms on normal training windows.
+
+**Engineering Results**
+
+- Full automated regression suite: 172 passed.
+- New exploratory modules provide Crest Factor calculation, combined features, and Dual-Threshold anomaly detection.
+- Frozen Experiment A/B models and evaluation results remain unchanged.
+
+**Scientific Limitations**
+
+- Training alarm rates are not independent false-positive estimates.
+- Previously examined Recordings 99, 100, and 121 cannot be treated as untouched independent test data.
+- Overlapping vibration windows are correlated.
+- Crest Factor amplitude invariance does not guarantee robustness to real operating-condition changes.
+- No independent cross-bearing or cross-equipment generalization has been established.
+- Improved fault detection from combined features has not yet been demonstrated.
+
+**Next Research Step**
+
+Step 27.11L — Exploratory Dual-Threshold Comparison, with fixed training-derived thresholds and explicit separation between exploratory analysis and independent evaluation.
+
+**Detailed Protocols**
+
+- `docs/step27_normal_only_anomaly_protocol.md`
+- `docs/step27_combined_anomaly_protocol.md`
 
 ---
 
@@ -925,6 +967,10 @@ No new model training or evaluation has been performed in this step.
 | `src/feature_validation.py` | Shared feature record and metadata validation |
 | `src/ml_baseline.py` | Build the StandardScaler and LogisticRegression baseline pipeline |
 | `src/ml_evaluation.py` | Calculate binary classification metrics and confusion matrix counts |
+| `src/normal_only_split.py` | Define and validate normal-only recording splits |
+| `src/exploratory_signal_features.py` | Calculate exploratory Crest Factor |
+| `src/exploratory_combined_features.py` | Combine existing statistics with Crest Factor |
+| `src/exploratory_dual_threshold.py` | Detect anomalies using RMS/CF OR thresholds |
 
 ## Real Data Analysis Scripts
 
@@ -954,7 +1000,7 @@ No new model training or evaluation has been performed in this step.
 - Binary classification metrics and invalid-label handling
 - Training/Validation recording isolation and split validation
 
-Last verified result: **93 passed**.
+Last verified result: **172 passed**.
 
 ## Current Dependencies
 
