@@ -346,3 +346,58 @@ Next Research Direction:
 Investigate whether RMS and amplitude-invariant signal
 features provide complementary information, using an
 explicitly documented exploratory experimental protocol.
+
+## RMS + Crest Factor Complementarity — Exploratory Analysis
+
+Status: Exploratory feature analysis completed; no combined
+anomaly detector has been trained or independently evaluated.
+
+### Within-recording Pearson correlations
+
+| Recording | Condition | Windows | RMS–CF Pearson r |
+|---|---|---:|---:|
+| 97 | Normal | 405 | -0.076285 |
+| 98 | Normal | 805 | +0.089409 |
+| 105 | Inner Race | 201 | -0.206258 |
+| 106 | Inner Race | 202 | +0.000930 |
+| 130 | Outer Race | 202 | -0.449626 |
+| 131 | Outer Race | 203 | -0.568261 |
+
+Each correlation was calculated separately within one recording.
+The 50%-overlapping windows are correlated observations.
+
+### Synthetic amplitude-scaling check
+
+Using the same synthetic signal with different scale factors:
+
+| Scale | RMS | Crest Factor |
+|---|---:|---:|
+| 1.00 | 2.607681 | 1.533930 |
+| 1.10 | 2.868449 | 1.533930 |
+| 1.20 | 3.129217 | 1.533930 |
+| 2.00 | 5.215362 | 1.533930 |
+
+RMS scaled proportionally with signal amplitude.
+Crest Factor remained unchanged to six decimal places.
+
+### Interpretation and limitations
+
+RMS measures signal magnitude, while Crest Factor measures
+the peak-to-RMS ratio.
+
+Within-recording correlations varied across fault conditions.
+Weak Pearson correlation does not establish statistical
+independence or demonstrate improved fault detection.
+
+Crest Factor and RMS are mathematically related because RMS
+appears in the Crest Factor denominator.
+
+The scaling experiment uses synthetic amplitude changes,
+not independently observed operating-condition changes.
+
+All findings remain exploratory. The previously evaluated
+Recording 121 must not be reused as a fresh independent
+test after exploratory analysis or model selection.
+
+Next: Define a documented exploratory protocol before
+developing or comparing combined anomaly detectors.
