@@ -98,3 +98,48 @@ Important:
 - Recording 121 must not be presented as a new test set.
 
 This candidate method has not yet been implemented.
+
+## Training-Only Threshold Calibration Results
+
+Status: Completed — exploratory training calibration.
+
+Data:
+- Normal Recording 97: 405 windows
+- Normal Recording 98: 805 windows
+- Total: 1210 normal training windows
+
+Thresholds:
+- RMS P99: 0.078705085
+- Crest Factor P99: 3.951375434
+
+Detection rule:
+- RMS > RMS_P99 OR Crest Factor > CF_P99
+
+Training alarm counts:
+
+| Recording | Windows | RMS-only | Dual-Threshold |
+|---|---:|---:|---:|
+| 97 | 405 | 12 | 16 |
+| 98 | 805 | 1 | 9 |
+| Total | 1210 | 13 | 25 |
+
+Overall training alarm rates:
+- RMS-only: 13/1210 = 1.0744%
+- Dual-Threshold: 25/1210 = 2.0661%
+- Additional Dual-Threshold alarms: 12 windows
+
+Interpretation:
+
+The Dual-Threshold OR rule increased the number of alarms
+on normal training data.
+
+These in-sample results do not establish operational
+false-positive rates or improved fault detection.
+
+Overlapping windows are correlated observations.
+
+No independent evaluation was performed during calibration.
+
+Thresholds must remain fixed during subsequent exploratory
+comparisons; previously evaluated data must not be treated
+as new independent test data.
