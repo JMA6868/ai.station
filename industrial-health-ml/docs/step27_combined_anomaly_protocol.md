@@ -184,3 +184,53 @@ Limitations:
 - No combined-detector fault-detection improvement has
   been demonstrated.
 - Fixed thresholds were not adjusted after these results.
+
+## Known-Fault Fixed-Threshold Exploratory Comparison
+
+Status: Completed — exploratory comparison.
+
+Fixed thresholds:
+- RMS P99: 0.078705085
+- Crest Factor P99: 3.951375434
+
+Results:
+
+| Recording | Condition | Windows | RMS-only | CF-only | Dual | CF Additional |
+|---|---|---:|---:|---:|---:|---:|
+| 105 | Inner Race | 201 | 201 | 201 | 201 | 0 |
+| 106 | Inner Race | 202 | 202 | 199 | 202 | 0 |
+| 130 | Outer Race | 202 | 202 | 202 | 202 | 0 |
+| 131 | Outer Race | 203 | 203 | 203 | 203 | 0 |
+| Total | Known Fault | 808 | 808 | 805 | 808 | 0 |
+
+Interpretation:
+
+RMS-only detected all 808 known-fault windows.
+
+The Dual-Threshold OR detector did not add fault-window
+detections beyond RMS-only on these recordings.
+
+Crest Factor alone missed three windows in Recording 106,
+but those windows were detected by RMS.
+
+In previously examined normal recordings, adding Crest
+Factor increased the number of alarmed windows.
+
+For the examined recordings, the combined detector
+increased normal alarms without increasing known-fault
+detection coverage.
+
+Limitations:
+
+- These fault recordings were previously used in experiments.
+- Results are exploratory and not independent evaluation.
+- The fault examples are already separable by RMS.
+- No conclusion about generalization to unseen faults,
+  bearings, or equipment can be drawn.
+- The thresholds were not changed after observing results.
+
+Next:
+
+Investigate evaluation designs that include more
+challenging faults and genuine recording-level or
+bearing-level independence before further model selection.
