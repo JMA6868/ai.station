@@ -143,3 +143,44 @@ No independent evaluation was performed during calibration.
 Thresholds must remain fixed during subsequent exploratory
 comparisons; previously evaluated data must not be treated
 as new independent test data.
+
+## Normal Recording 99 — Exploratory Comparison
+
+Status: Completed — post-calibration exploratory analysis.
+
+Recording:
+- ID: 99
+- Condition: Normal
+- Load: 2 HP
+- Windows: 807
+
+Fixed training-derived thresholds:
+- RMS P99: 0.078705085
+- Crest Factor P99: 3.951375434
+
+Results:
+- RMS-only alarms: 0/807 (0.00%)
+- Crest Factor-only alarms: 18/807 (2.23%)
+- Dual-Threshold alarms: 18/807 (2.23%)
+
+Interpretation:
+
+All Dual-Threshold alarms were triggered by the Crest
+Factor condition because RMS-only triggered no alarms.
+
+Adding Crest Factor increased normal-window alarms
+relative to the RMS-only baseline.
+
+This result illustrates that amplitude-scaling invariance
+does not guarantee robustness to actual operating-condition
+differences.
+
+Limitations:
+
+- Recording 99 was previously examined.
+- This is exploratory analysis, not independent validation.
+- Overlapping windows are correlated.
+- Window alarms are not necessarily independent alarm events.
+- No combined-detector fault-detection improvement has
+  been demonstrated.
+- Fixed thresholds were not adjusted after these results.
