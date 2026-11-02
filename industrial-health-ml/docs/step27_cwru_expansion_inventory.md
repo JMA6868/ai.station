@@ -20,11 +20,11 @@ Existing experiments A/B must remain unchanged.
 
 | ID | Condition | Fault Diameter | Load | Local Status |
 |---|---|---|---|---|
-| 144 | Outer Race 3:00 | 0.007 in | 0 HP | Not downloaded |
-| 156 | Outer Race 12:00 | 0.007 in | 0 HP | Not downloaded |
-| 169 | Inner Race | 0.014 in | 0 HP | Not downloaded |
-| 185 | Ball | 0.014 in | 0 HP | Not downloaded |
-| 197 | Outer Race 6:00 | 0.014 in | 0 HP | Not downloaded |
+| 144 | Outer Race 3:00 | 0.007 in | 0 HP | Downloaded and verified |
+| 156 | Outer Race 12:00 | 0.007 in | 0 HP | Downloaded and verified |
+| 169 | Inner Race | 0.014 in | 0 HP | Downloaded and verified |
+| 185 | Ball | 0.014 in | 0 HP | Downloaded and verified |
+| 197 | Outer Race 6:00 | 0.014 in | 0 HP | Downloaded and verified |
 
 ## Research Requirements
 
@@ -39,7 +39,7 @@ Existing experiments A/B must remain unchanged.
 
 Inventory planning only.
 
-No additional recordings have been downloaded or evaluated.
+Five additional recordings have been downloaded and passed signal-integrity checks. No model evaluation has been performed on these recordings.
 
 ## Official Source
 
