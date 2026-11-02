@@ -163,3 +163,71 @@ Status: Design only. No split finalized.
   must be labeled exploratory.
 
 No model evaluation has been conducted under this protocol.
+
+## Stage 1 — Candidate Recording Allocation
+
+Status: Proposed; not yet frozen.
+
+Training:
+- Normal recordings 97 and 98.
+
+Development:
+- Normal recording 99.
+- Previously examined; not an untouched validation set.
+
+Exploratory Normal Evaluation:
+- Normal recording 100.
+- Previously evaluated; not an independent new test.
+
+Candidate Expansion Fault Evaluation:
+- 144: Outer Race 3:00, 0.007 inch.
+- 156: Outer Race 12:00, 0.007 inch.
+- 169: Inner Race, 0.014 inch.
+- 185: Ball Fault, 0.014 inch.
+- 197: Outer Race 6:00, 0.014 inch.
+
+Restrictions:
+- Do not inspect expansion model predictions before
+  freezing their evaluation roles and decision rules.
+- Do not tune thresholds using designated evaluation faults.
+- The expansion fault recordings contain no new Normal data.
+- Physical-bearing independence is not established.
+- Report any resulting evaluation as limited to the
+  specified recordings and fault conditions.
+- Existing normal-recording results remain exploratory.
+
+This allocation is a proposal, not a finalized split.
+
+## Stage 1 — Threshold Reproducibility
+
+Status: Historical calibration reproduced.
+
+Calibration recordings:
+- Normal 97
+- Normal 98
+
+Window configuration:
+- Sampling rate: 12,000 Hz
+- Window size: 1200 samples
+- Step: 600 samples
+- Total calibration windows: 1210
+
+Calibration method:
+- NumPy percentile
+- Percentile: 99
+- Default linear interpolation
+
+Reproduced thresholds:
+- RMS P99: 0.078705085
+- Crest Factor P99: 3.951375434
+
+Both reproduced values agree with historical results
+to nine decimal places.
+
+Interpretation:
+- Threshold calibration is reproducible.
+- Thresholds were calculated using Normal training data.
+- This does not establish independent detection performance.
+- Expansion recordings 144, 156, 169, 185, and 197
+  were not used in threshold calibration.
+- Expansion model evaluation has not been performed.
