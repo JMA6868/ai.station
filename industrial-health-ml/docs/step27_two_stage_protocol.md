@@ -166,7 +166,7 @@ No model evaluation has been conducted under this protocol.
 
 ## Stage 1 — Candidate Recording Allocation
 
-Status: Proposed; not yet frozen.
+Status: Frozen for Stage 1 expansion evaluation.
 
 Training:
 - Normal recordings 97 and 98.
@@ -196,7 +196,7 @@ Restrictions:
   specified recordings and fault conditions.
 - Existing normal-recording results remain exploratory.
 
-This allocation is a proposal, not a finalized split.
+This allocation is frozen for the Stage 1 expansion evaluation only.
 
 ## Stage 1 — Threshold Reproducibility
 
@@ -231,3 +231,91 @@ Interpretation:
 - Expansion recordings 144, 156, 169, 185, and 197
   were not used in threshold calibration.
 - Expansion model evaluation has not been performed.
+
+## Stage 1 — Pre-specified Evaluation Rules
+
+Status: Frozen for Stage 1 expansion evaluation.
+
+Evaluation recordings:
+- 144, 156, 169, 185, 197
+
+Baseline A — RMS-only:
+- Anomaly if RMS > 0.078705085.
+
+Baseline B — RMS plus Crest Factor:
+- Anomaly if RMS > 0.078705085
+  OR Crest Factor > 3.951375434.
+
+Signal processing:
+- Sampling rate: 12000 Hz.
+- Window size: 1200 samples.
+- Step: 600 samples.
+- Use the existing RMS and Crest Factor implementations.
+
+Threshold policy:
+- Both thresholds originate from Normal recordings 97 and 98.
+- No threshold tuning using expansion recordings.
+- Use strict greater-than comparison.
+- Do not change thresholds after inspecting evaluation results.
+
+Planned evaluation:
+- Report anomalous window count for each recording.
+- Report total window count for each recording.
+- Report window anomaly rate for each recording.
+- Compare RMS-only and RMS-plus-CF results.
+- Apply the frozen recording-level anomaly-rate cutoff > 0.05.
+- Report detection coverage at recording level.
+
+Limitations:
+- All five expansion recordings are fault conditions.
+- No independent Normal false-alarm evaluation is available.
+- Physical-bearing independence remains unverified.
+- Results cannot establish generalization to other machines.
+- These evaluations are not independent of each other.
+
+No expansion model predictions have been inspected.
+
+## Stage 1 — Recording-Level Decision Rule
+
+Status: Frozen exploratory rule for Stage 1 expansion evaluation.
+
+For each recording and each baseline:
+
+- Calculate the total number of valid windows.
+- Count windows classified as anomalous.
+- Calculate anomaly_rate = anomalous_windows / total_windows.
+- Classify the recording as Abnormal if anomaly_rate > 0.05.
+- Otherwise classify the recording as Normal.
+
+The same 5% rule applies to both baselines.
+
+The 5% threshold is a pre-specified exploratory choice,
+not an independently calibrated operating point.
+
+Important limitations:
+- A 5% window anomaly-rate cutoff does not imply a 5%
+  normal false-alarm rate.
+- Overlapping windows are correlated.
+- No new independent Normal recordings are available.
+- Do not change this cutoff based on expansion results.
+- Report both window-level rates and recording decisions.
+- Report detection coverage across the five fault recordings.
+
+This rule was frozen before expansion model predictions.
+
+## Stage 1 — Evaluation Implementation Details
+
+- Recalculate RMS P99 and CF P99 from Normal 97 and 98.
+- Use the full floating-point threshold values for decisions.
+- Nine-decimal threshold values in this document are rounded
+  representations for reporting only.
+- Use NumPy percentile with default linear interpolation.
+- Use strict > comparisons for window anomaly detection.
+- Use strict anomaly_rate > 0.05 for recording decisions.
+- An anomaly rate exactly equal to 0.05 is classified Normal.
+- Calculate each rate using that recording's actual window count.
+- A recording with zero valid windows must raise an error.
+- Do not revise these decisions after viewing expansion results.
+
+Stage 1 evaluation rules are frozen before expansion predictions.
+The overall two-stage protocol remains under development.
