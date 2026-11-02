@@ -44,3 +44,32 @@ No additional recordings have been downloaded or evaluated.
 ## Official Source
 
 https://engineering.case.edu/bearingdatacenter/12k-drive-end-bearing-fault-data
+
+## Official Metadata Verification
+
+Status: Recording IDs and published conditions verified.
+
+Source:
+https://engineering.case.edu/bearingdatacenter/12k-drive-end-bearing-fault-data
+
+Verified candidate recordings:
+
+| ID | Official Dataset Entry | Verification |
+|---|---|---|
+| 144 | OR007@3_0 | Confirmed |
+| 156 | OR007@12_0 | Confirmed |
+| 169 | IR014_0 | Confirmed |
+| 185 | B014_0 | Confirmed |
+| 197 | OR014@6_0 | Confirmed |
+
+All five recordings are listed under the official
+12 kHz Drive-End Bearing Fault Data category.
+
+Physical-bearing and defect-instance identities remain
+unverified. Distinct recording IDs must not be interpreted
+as proof of independent physical bearings.
+
+MAT signal keys and actual signal contents have not yet
+been verified locally.
+
+No new recordings have been downloaded or evaluated.
