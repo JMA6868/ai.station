@@ -6,10 +6,10 @@
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
-**Last Completed Step:** Step 27.11L — Dual-Threshold Training Calibration  
-**Next Step:** Step 27.11L — Exploratory Dual-Threshold Comparison  
-**Automated Tests:** 172 passed (last full suite verified)  
-**Last Confirmed GitHub Commit:** `5de6c75` (dual-threshold training calibration)  
+**Last Completed Step:** Step 27.12-9J — Stage 1 Expansion Evaluation Protocol Freeze  
+**Next Step:** Step 27.12-10 — Stage 1 Expansion Fault Evaluation  
+**Automated Tests:** 196 passed (last full suite verified)  
+**Last Confirmed GitHub Commit:** `22fdb8f` (Stage 1 evaluation protocol freeze)  
 
 ---
 
@@ -83,11 +83,17 @@ Other future AI or Raspberry Pi projects should have their own directories.
 | ML model robustness investigation | Completed — exploratory feature and signal noise experiments |
 | Normal-only RMS anomaly detection | Completed — exploratory RMS P99 baseline |
 | Crest Factor feature research | Completed — exploratory signal analysis |
-| Dual-Threshold anomaly detection | In Progress — implemented and training-calibrated |
+| Dual-Threshold anomaly detection | Completed — exploratory comparison and training calibration |
+| CWRU data acquisition and integrity verification | Completed — 21 local recordings; 5 expansion faults verified |
+| Two-Stage system architecture | Defined — Stage 1 anomaly detection, Stage 2 fault diagnosis |
+| Stage 1 threshold calibration | Completed — RMS and CF P99 reproducibility verified |
+| Stage 1 expansion evaluation protocol | Frozen — five fault recordings reserved for evaluation |
+| Stage 2 multiclass evaluation | Completed — evaluation utilities and 11 automated tests |
+| Stage 2 diagnosis model | Planned — training and Unknown/Abstain design pending |
 | Multimodal sensor fusion | Not started |
 | Interactive ML demonstration | Not started |
 
-**Current focus:** Step 27.11L — Exploratory Dual-Threshold Comparison. RMS and Crest Factor thresholds have been calibrated using Normal Training Recordings 97 and 98. The next objective is to compare fixed-threshold detector behavior while explicitly distinguishing exploratory analysis from independent evaluation.
+**Current focus:** Step 27.12-10 — Stage 1 Expansion Fault Evaluation. The RMS-only and RMS-plus-Crest-Factor evaluation rules have been frozen before evaluating five new CWRU fault recordings. Stage 2 diagnosis design remains in progress.
 
 ---
 
@@ -942,6 +948,54 @@ Step 27.11L — Exploratory Dual-Threshold Comparison, with fixed training-deriv
 
 - `docs/step27_normal_only_anomaly_protocol.md`
 - `docs/step27_combined_anomaly_protocol.md`
+
+---
+
+### Step 27.12 — CWRU Expansion and Two-Stage System Development
+
+**Completed Engineering Work**
+
+- Expanded the local CWRU inventory from 16 to 21 recordings.
+- Downloaded and verified five additional fault recordings: 144, 156, 169, 185, and 197.
+- Established a Two-Stage Architecture:
+  Stage 1 — Normal-only Anomaly Detection;
+  Stage 2 — Known-Fault Diagnosis with Unknown/Abstain handling.
+- Developed multiclass evaluation utilities supporting confusion matrix,
+  accuracy, Macro F1, per-class recall, and class support.
+- Implemented reusable percentile-based threshold calibration.
+- Reproduced historical RMS P99 and Crest Factor P99 thresholds
+  from Normal training recordings 97 and 98.
+- Frozen Stage 1 expansion evaluation rules before model predictions.
+
+**Verified Results**
+
+- Normal training windows: 1210.
+- RMS P99: 0.078705085.
+- Crest Factor P99: 3.951375434.
+- Full automated regression suite: 196 passed.
+- Latest confirmed GitHub commit: `22fdb8f`.
+
+**Scientific Limitations**
+
+- All five expansion recordings represent fault conditions.
+- No new independent Normal evaluation recordings are available.
+- Physical-bearing and defect-instance independence remain unverified.
+- Expanded fault recordings have not yet been model-evaluated.
+- Stage 1 evaluation rules are frozen; the complete two-stage
+  experimental protocol is still under development.
+- Previously evaluated recordings must not be described as untouched tests.
+
+**Next Research Step**
+
+Step 27.12-10 — Evaluate the five expansion fault recordings
+using frozen RMS-only and RMS-plus-Crest-Factor rules.
+
+**Detailed Protocol**
+
+- `docs/step27_two_stage_protocol.md`
+- `docs/step27_cwru_expansion_inventory.md`
+
+**Status: In Progress**
 
 ---
 
