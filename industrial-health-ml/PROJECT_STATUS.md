@@ -6,10 +6,10 @@
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
-**Last Completed Step:** Step 27.12-10C — Stage 1 Expansion Fault Evaluation  
-**Next Step:** Step 27.12-11 — Stage 2 Fault Diagnosis Design  
-**Automated Tests:** 206 passed (last full suite verified)  
-**Last Confirmed GitHub Commit:** `448b945` (first frozen Stage 1 expansion evaluation)  
+**Last Completed Step:** Step 27.12-11M-7 — Sampling-Rate Harmonization Tests  
+**Next Step:** Step 27.12-11N — CWRU-Only Preprocessing Integration  
+**Automated Tests:** 210 passed (last full suite verified)  
+**Last Confirmed GitHub Commit:** `559b95a` (project status update)  
 
 ---
 
@@ -89,11 +89,11 @@ Other future AI or Raspberry Pi projects should have their own directories.
 | Stage 1 threshold calibration | Completed — RMS and CF P99 reproducibility verified |
 | Stage 1 expansion evaluation protocol | Frozen — five fault recordings reserved for evaluation |
 | Stage 2 multiclass evaluation | Completed — evaluation utilities and 11 automated tests |
-| Stage 2 diagnosis model | Planned — training and Unknown/Abstain design pending |
+| Stage 2 diagnosis model | Optional — deferred until Stage 1 delivery |
 | Multimodal sensor fusion | Not started |
 | Interactive ML demonstration | Not started |
 
-**Current focus:** Step 27.12-11 — Stage 2 Fault Diagnosis Design. Stage 1 expansion evaluation is complete: both frozen baselines detected all five specified fault recordings. Stage 2 multiclass diagnosis and Unknown/Abstain handling remain under development.
+**Current focus:** CWRU-only Stage 1 anomaly detection (Must-have). Stage 2 fault diagnosis is Good-to-have and deferred. Full CWRU dataset suitability audit is in progress. Sampling-rate harmonization module and four tests are complete; integration with CWRU preprocessing is next. Frozen experimental results remain unchanged.
 
 ---
 
