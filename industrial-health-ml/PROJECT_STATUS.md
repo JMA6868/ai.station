@@ -6,10 +6,10 @@
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
-**Last Completed Step:** Step 27.12-9J — Stage 1 Expansion Evaluation Protocol Freeze  
-**Next Step:** Step 27.12-10 — Stage 1 Expansion Fault Evaluation  
-**Automated Tests:** 196 passed (last full suite verified)  
-**Last Confirmed GitHub Commit:** `22fdb8f` (Stage 1 evaluation protocol freeze)  
+**Last Completed Step:** Step 27.12-10C — Stage 1 Expansion Fault Evaluation  
+**Next Step:** Step 27.12-11 — Stage 2 Fault Diagnosis Design  
+**Automated Tests:** 206 passed (last full suite verified)  
+**Last Confirmed GitHub Commit:** `448b945` (first frozen Stage 1 expansion evaluation)  
 
 ---
 
@@ -93,7 +93,7 @@ Other future AI or Raspberry Pi projects should have their own directories.
 | Multimodal sensor fusion | Not started |
 | Interactive ML demonstration | Not started |
 
-**Current focus:** Step 27.12-10 — Stage 1 Expansion Fault Evaluation. The RMS-only and RMS-plus-Crest-Factor evaluation rules have been frozen before evaluating five new CWRU fault recordings. Stage 2 diagnosis design remains in progress.
+**Current focus:** Step 27.12-11 — Stage 2 Fault Diagnosis Design. Stage 1 expansion evaluation is complete: both frozen baselines detected all five specified fault recordings. Stage 2 multiclass diagnosis and Unknown/Abstain handling remain under development.
 
 ---
 
@@ -972,28 +972,43 @@ Step 27.11L — Exploratory Dual-Threshold Comparison, with fixed training-deriv
 - Normal training windows: 1210.
 - RMS P99: 0.078705085.
 - Crest Factor P99: 3.951375434.
-- Full automated regression suite: 196 passed.
-- Latest confirmed GitHub commit: `22fdb8f`.
+- Full automated regression suite: 206 passed.
+- Latest confirmed GitHub commit: `448b945`.
+
+**First Frozen Stage 1 Expansion Evaluation**
+
+- Evaluation recordings: 144, 156, 169, 185, 197.
+- RMS-only recording detection: 5/5.
+- RMS-plus-Crest-Factor recording detection: 5/5.
+- RMS-only anomalous windows: 1004/1010.
+- Dual-Threshold anomalous windows: 1005/1010.
+- Crest Factor added one anomalous window without
+  increasing recording-level detection coverage.
+- Raw log and formal report committed to GitHub.
+- Results are specific to these five fault recordings,
+  not an independent estimate of overall system accuracy.
 
 **Scientific Limitations**
 
 - All five expansion recordings represent fault conditions.
 - No new independent Normal evaluation recordings are available.
 - Physical-bearing and defect-instance independence remain unverified.
-- Expanded fault recordings have not yet been model-evaluated.
+- Five expansion fault recordings have completed their first frozen Stage 1 evaluation.
 - Stage 1 evaluation rules are frozen; the complete two-stage
   experimental protocol is still under development.
 - Previously evaluated recordings must not be described as untouched tests.
 
 **Next Research Step**
 
-Step 27.12-10 — Evaluate the five expansion fault recordings
-using frozen RMS-only and RMS-plus-Crest-Factor rules.
+Step 27.12-11 — Design Stage 2 multiclass fault diagnosis,
+including Unknown/Abstain handling and dataset allocation.
 
 **Detailed Protocol**
 
 - `docs/step27_two_stage_protocol.md`
 - `docs/step27_cwru_expansion_inventory.md`
+- `docs/step27_stage1_expansion_results.md`
+- `docs/step27_stage1_expansion_first_evaluation.log`
 
 **Status: In Progress**
 
