@@ -1,0 +1,9 @@
+RMS P99: 0.078705085
+CF P99:  3.951375434
+144: windows=202, RMS=202 (100.00%), Dual=202 (100.00%), RMS_detected=True, Dual_detected=True
+156: windows=202, RMS=202 (100.00%), Dual=202 (100.00%), RMS_detected=True, Dual_detected=True
+169: windows=202, RMS=202 (100.00%), Dual=202 (100.00%), RMS_detected=True, Dual_detected=True
+185: windows=202, RMS=196 (97.03%), Dual=197 (97.52%), RMS_detected=True, Dual_detected=True
+197: windows=202, RMS=202 (100.00%), Dual=202 (100.00%), RMS_detected=True, Dual_detected=True
+RMS recording detection: 5/5
+Dual recording detection: 5/5
