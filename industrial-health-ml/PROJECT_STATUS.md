@@ -6,10 +6,10 @@
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
-**Last Completed Step:** Step 27.12-11N-9 — CWRU Preprocessing Integration Tests  
-**Next Step:** Step 27.12-11O — Harmonized Stage 1 Evaluation Design  
-**Automated Tests:** 215 passed (last full suite verified)  
-**Last Confirmed GitHub Commit:** `cace86d` (CWRU audit and resampling foundation)  
+**Last Completed Step:** Step 27.12-11O-14 — Harmonized Stage 1 First Evaluation  
+**Next Step:** Step 27.12-11P — Expanded CWRU Stage 1 Evaluation Design  
+**Automated Tests:** 220 passed (last full suite verified)  
+**Last Confirmed GitHub Commit:** `b15e26c` (validated CWRU preprocessing pipeline)  
 
 ---
 
@@ -93,7 +93,7 @@ Other future AI or Raspberry Pi projects should have their own directories.
 | Multimodal sensor fusion | Not started |
 | Interactive ML demonstration | Not started |
 
-**Current focus:** CWRU-only Stage 1 anomaly detection (Must-have). Stage 2 fault diagnosis is Good-to-have and deferred. Full CWRU dataset suitability audit is in progress. Sampling-rate harmonization and CWRU preprocessing modules are implemented with nine new tests; harmonized Stage 1 evaluation design is next. Frozen experimental results remain unchanged.
+**Current focus:** CWRU-only Stage 1 anomaly detection (Must-have). Stage 2 fault diagnosis is Good-to-have and deferred. Full CWRU dataset suitability audit is in progress. Sampling-rate harmonization and CWRU preprocessing modules are implemented with nine new tests; the first harmonized Stage 1 evaluation is complete: Normal false alarms 0/2, fault detections 5/5, and 1010/1010 fault windows flagged. Expanded CWRU evaluation design is next. Frozen experimental results remain unchanged.
 
 ---
 
