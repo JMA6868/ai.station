@@ -6,10 +6,10 @@
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
-**Last Completed Step:** Step 27.12-11O-14 — Harmonized Stage 1 First Evaluation  
-**Next Step:** Step 27.12-11P — Expanded CWRU Stage 1 Evaluation Design  
-**Automated Tests:** 220 passed (last full suite verified)  
-**Last Confirmed GitHub Commit:** `39e1e82` (moved IndustrialSense AI to repository root)  
+**Last Completed Step:** Step 27.12-11P — Expanded CWRU Stage 1 RMS Evaluation  
+**Next Step:** Step 27.12-11Q — Additional CWRU Fault Condition Expansion Planning  
+**Automated Tests:** 223 passed (last full suite verified)  
+**Last Confirmed GitHub Commit:** `c6dbe06` (updated project status after repository migration)  
 
 ---
 
@@ -51,6 +51,24 @@ IndustrialSense AI is maintained at the repository root:
 `/workspaces/industrial-health-ml/`
 
 Other future projects should use separate repositories.
+
+---
+
+## Latest Research Result — Expanded Stage 1 RMS Evaluation
+
+Step 27.12-11P completed a descriptive evaluation of 19 CWRU recordings.
+
+- Normal false alarms: 0/2.
+- Fault recording detections: 17/17.
+- Recording-level correct decisions: 19/19.
+- Frozen harmonized RMS P99 threshold: 0.07467624803042527.
+- Automated tests: 223 passed.
+- Results are not an independent untouched holdout evaluation.
+- Physical-bearing independence remains unverified.
+
+Protocol: `docs/step27_expanded_stage1_protocol.md`
+
+Results: `docs/step27_expanded_stage1_results.md`
 
 ---
 
