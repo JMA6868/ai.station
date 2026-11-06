@@ -6,10 +6,10 @@
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
-**Last Completed Step:** Step 27.12-11P — Expanded CWRU Stage 1 RMS Evaluation  
-**Next Step:** Step 27.12-11Q — Additional CWRU Fault Condition Expansion Planning  
-**Automated Tests:** 223 passed (last full suite verified)  
-**Last Confirmed GitHub Commit:** `c6dbe06` (updated project status after repository migration)  
+**Last Completed Step:** Step 27.12-11Q — Additional CWRU Fault Evaluation  
+**Next Step:** Step 27.12-11R — Normal/Fault RMS Separation Investigation  
+**Automated Tests:** 239 passed (last full suite verified)  
+**Last Confirmed GitHub Commit:** `5577175` (expanded CWRU Stage 1 RMS evaluation)  
 
 ---
 
@@ -69,6 +69,29 @@ Step 27.12-11P completed a descriptive evaluation of 19 CWRU recordings.
 Protocol: `docs/step27_expanded_stage1_protocol.md`
 
 Results: `docs/step27_expanded_stage1_results.md`
+
+---
+
+## Latest Research Result — Additional CWRU Fault Evaluation
+
+Step 27.12-11Q extended the frozen RMS baseline evaluation
+to 28 additional official CWRU 12 kHz Drive End fault recordings.
+
+- Local CWRU inventory: 49 recordings (4 Normal, 45 Fault).
+- Additional Fault detections: 28/28.
+- Additional anomalous Fault windows: 5643/5643.
+- Combined descriptive Fault detections: 45/45.
+- Previously evaluated Normal false alarms: 0/2.
+- Frozen RMS P99 threshold: 0.07467624803042527.
+- Automated tests: 239 passed.
+- Physical-bearing independence remains unverified.
+- This is not an independent cross-bearing generalization result.
+
+Protocol: `docs/step27_additional_fault_evaluation_protocol.md`
+
+Results: `docs/step27_additional_fault_results.md`
+
+Per-recording results: `docs/step27_additional_fault_results.csv`
 
 ---
 

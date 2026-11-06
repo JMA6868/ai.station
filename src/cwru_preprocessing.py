@@ -2,6 +2,9 @@
 
 from pathlib import Path
 
+from src.cwru_additional_fault_metadata import (
+    CWRU_ADDITIONAL_FAULT_METADATA,
+)
 from src.cwru_loader import load_cwru_de_signal
 from src.signal_resampling import resample_signal
 
@@ -24,7 +27,7 @@ def load_harmonized_cwru_signal(file_path, source_rate_hz):
         118, 119, 120, 121,
         130, 131, 132, 133,
         144, 156, 169, 185, 197,
-    }
+    } | set(CWRU_ADDITIONAL_FAULT_METADATA)
 
     if recording_id in known_12k_fault_ids:
         if source_rate_hz != 12000:
