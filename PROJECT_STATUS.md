@@ -1,15 +1,15 @@
 # IndustrialSense AI — Project Status
 
 **Project:** IndustrialSense AI  
-**Project Directory:** `industrial-health-ml/`  
-**GitHub Repository:** `JMA6868/ai.station`  
+**Project Directory:** `/workspaces/industrial-health-ml/`  
+**GitHub Repository:** `JMA6868/industrial-health-ml`  
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
 **Last Completed Step:** Step 27.12-11O-14 — Harmonized Stage 1 First Evaluation  
 **Next Step:** Step 27.12-11P — Expanded CWRU Stage 1 Evaluation Design  
 **Automated Tests:** 220 passed (last full suite verified)  
-**Last Confirmed GitHub Commit:** `b15e26c` (validated CWRU preprocessing pipeline)  
+**Last Confirmed GitHub Commit:** `39e1e82` (moved IndustrialSense AI to repository root)  
 
 ---
 
@@ -44,13 +44,13 @@ The project will use publicly available industrial sensor datasets and progressi
 
 ## Repository Organization
 
-The GitHub repository `ai.station` is a monorepo intended to host multiple future projects.
+The GitHub repository `industrial-health-ml` is dedicated to the IndustrialSense AI project.
 
-IndustrialSense AI is maintained separately under:
+IndustrialSense AI is maintained at the repository root:
 
-`ai.station/industrial-health-ml/`
+`/workspaces/industrial-health-ml/`
 
-Other future AI or Raspberry Pi projects should have their own directories.
+Other future projects should use separate repositories.
 
 ---
 
@@ -1137,7 +1137,7 @@ These are ongoing issues, not necessarily blockers.
 
 1. Raw CWRU `.mat` files are stored under `data/raw/cwru/` and should not be committed to GitHub.
 2. Project documentation, code, tests, and selected experiment figures should be version controlled.
-3. The `ai.station` repository is a monorepo; all IndustrialSense AI paths should be interpreted relative to `industrial-health-ml/`.
+3. The `industrial-health-ml` repository contains IndustrialSense AI at its root; all project paths are relative to the repository root.
 4. An in-sample accuracy of 100% must never be represented as independent model testing accuracy.
 5. Passing unit tests demonstrates correctness for tested software behaviors, not generalization of ML predictions.
 6. Project work should proceed incrementally, with tests and documentation updated alongside each meaningful engineering change.
