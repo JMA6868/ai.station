@@ -6,10 +6,10 @@
 **Development Environment:** GitHub Codespaces  
 **Language:** Python  
 **Current Milestone:** M1 — Foundations and Real Industrial Data Integration  
-**Last Completed Step:** Step 27.12-11Q — Additional CWRU Fault Evaluation  
-**Next Step:** Step 27.12-11R — Normal/Fault RMS Separation Investigation  
-**Automated Tests:** 239 passed (last full suite verified)  
-**Last Confirmed GitHub Commit:** `5577175` (expanded CWRU Stage 1 RMS evaluation)  
+**Last Completed Step:** Step 27.12-11R — Normal/Fault RMS Separation Investigation  
+**Next Step:** Step 27.12-11S — CWRU Acquisition and Preprocessing Confound Investigation  
+**Automated Tests:** 245 passed (last full suite verified)  
+**Last Confirmed GitHub Commit:** `947a0a6` (additional CWRU fault evaluation)  
 
 ---
 
@@ -92,6 +92,35 @@ Protocol: `docs/step27_additional_fault_evaluation_protocol.md`
 Results: `docs/step27_additional_fault_results.md`
 
 Per-recording results: `docs/step27_additional_fault_results.csv`
+
+---
+
+## Latest Research Result — Normal/Fault RMS Separation Investigation
+
+Step 27.12-11R investigated RMS distributions and mathematical
+amplitude sensitivity across 49 CWRU recordings.
+
+- Dataset: 4 Normal and 45 Fault recordings.
+- Maximum Normal window RMS: 0.074948803 (recording 97).
+- Minimum Fault window RMS: 0.074981158 (recording 185).
+- Observed RMS separation gap: 0.000032355.
+- Frozen RMS P99 threshold: 0.07467624803042527.
+- Fault critical-scale range: 0.029574 to 0.696096.
+- Most amplitude-sensitive Fault: recording 197.
+- Least amplitude-sensitive Fault: recording 3008.
+- Median Fault critical scale: 0.177701.
+- Ten complete 0–3 HP fault groups analyzed.
+- Automated tests: 245 passed.
+- No change to the frozen detection rule.
+- Results are descriptive, not independent cross-bearing validation.
+- Amplitude scaling is a mathematical sensitivity analysis,
+  not experimental robustness validation.
+
+Research report: `docs/step27_rms_separation_investigation.md`
+
+Analysis module: `src/rms_distribution_analysis.py`
+
+Tests: `tests/test_rms_distribution_analysis.py`
 
 ---
 
